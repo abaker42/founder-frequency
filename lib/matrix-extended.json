@@ -1,0 +1,447 @@
+{
+	"_meta": {
+		"description": "Extended interpretation data for Blueprint (premium) tier. Supplements the core interpretation_matrix.json.",
+		"sections": [
+			"partnership_compatibility",
+			"action_plan_archetypes",
+			"personal_year_business",
+			"personal_month_business"
+		]
+	},
+
+	"partnership_compatibility": {
+		"_note": "Maps each Life Path to ideal partner/collaborator types by business role. Used in Chapter 9 of the Blueprint report.",
+
+		"1": {
+			"ideal_cofounder": {
+				"types": ["2", "6"],
+				"why": "1 leads, 2 mediates and handles relationships, 6 builds team loyalty. 1 needs a partner who won't compete for the spotlight but will manage the people side."
+			},
+			"ideal_ops": {
+				"types": ["4", "8"],
+				"why": "4 builds the systems 1 doesn't have patience for. 8 matches ambition and adds financial structure."
+			},
+			"ideal_creative": {
+				"types": ["3", "5"],
+				"why": "3 amplifies the message, 5 brings adaptability and market awareness."
+			},
+			"friction_types": {
+				"types": ["1", "7"],
+				"why": "Two 1s create power struggles. 7s move too slowly and question too much for 1's pace."
+			},
+			"ideal_mentor": {
+				"types": ["8", "22"],
+				"why": "8 has walked the empire-building path. 22 provides institutional vision."
+			}
+		},
+		"2": {
+			"ideal_cofounder": {
+				"types": ["1", "8"],
+				"why": "2 needs a decisive leader at the front. 1 or 8 provides the directional force while 2 manages harmony and partnerships."
+			},
+			"ideal_ops": {
+				"types": ["4", "6"],
+				"why": "4 creates structure 2 appreciates. 6 shares the people-first value system."
+			},
+			"ideal_creative": {
+				"types": ["3", "9"],
+				"why": "3 brings expressive energy 2 supports. 9 shares humanitarian vision."
+			},
+			"friction_types": {
+				"types": ["5", "7"],
+				"why": "5 is too unpredictable for 2's need for stability. 7 is too withdrawn for 2's partnership orientation."
+			},
+			"ideal_mentor": {
+				"types": ["6", "11"],
+				"why": "6 models service leadership. 11 provides the visionary inspiration 2 craves."
+			}
+		},
+		"3": {
+			"ideal_cofounder": {
+				"types": ["4", "8"],
+				"why": "3 creates, 4 systematizes. 3 inspires, 8 monetizes. These are the most productive creative-business partnerships."
+			},
+			"ideal_ops": {
+				"types": ["4", "2"],
+				"why": "4 handles the structure 3 avoids. 2 manages relationships 3 starts but doesn't maintain."
+			},
+			"ideal_creative": {
+				"types": ["5", "9"],
+				"why": "5 matches creative energy with market adaptability. 9 adds depth and global perspective."
+			},
+			"friction_types": {
+				"types": ["3", "7"],
+				"why": "Two 3s scatter in different creative directions. 7 is too analytical and slow for 3's pace."
+			},
+			"ideal_mentor": {
+				"types": ["8", "1"],
+				"why": "8 teaches monetization discipline. 1 models focused execution."
+			}
+		},
+		"4": {
+			"ideal_cofounder": {
+				"types": ["1", "3"],
+				"why": "1 provides vision and initiative 4 can build upon. 3 provides creative energy and market presence."
+			},
+			"ideal_ops": {
+				"types": ["4", "2"],
+				"why": "Another 4 doubles systematic capacity. 2 adds diplomatic people skills."
+			},
+			"ideal_creative": {
+				"types": ["3", "5"],
+				"why": "3 brings creative spark 4 lacks. 5 introduces adaptability to 4's rigidity."
+			},
+			"friction_types": {
+				"types": ["5", "3"],
+				"why": "5 is too chaotic for 4's need for order. 3 may resent 4's constraints on creativity."
+			},
+			"ideal_mentor": {
+				"types": ["22", "8"],
+				"why": "22 is the master builder 4 aspires to be. 8 shows how systems create wealth."
+			}
+		},
+		"5": {
+			"ideal_cofounder": {
+				"types": ["4", "8"],
+				"why": "4 grounds 5's restlessness. 8 channels 5's energy toward wealth building."
+			},
+			"ideal_ops": {
+				"types": ["4", "6"],
+				"why": "4 creates the stability 5 needs underneath. 6 maintains team and customer relationships."
+			},
+			"ideal_creative": {
+				"types": ["3", "1"],
+				"why": "3 matches creative energy. 1 provides focus and decisiveness."
+			},
+			"friction_types": {
+				"types": ["5", "2"],
+				"why": "Two 5s create maximum chaos. 2 is too slow and cautious for 5's pace."
+			},
+			"ideal_mentor": {
+				"types": ["7", "8"],
+				"why": "7 teaches 5 the value of depth. 8 shows how to channel freedom into wealth."
+			}
+		},
+		"6": {
+			"ideal_cofounder": {
+				"types": ["1", "8"],
+				"why": "1 provides drive 6 channels into service. 8 adds financial ambition to 6's care-oriented approach."
+			},
+			"ideal_ops": {
+				"types": ["4", "2"],
+				"why": "4 builds systems 6 oversees with care. 2 shares relational values."
+			},
+			"ideal_creative": {
+				"types": ["3", "9"],
+				"why": "3 adds expressive energy. 9 shares the service-first mission."
+			},
+			"friction_types": {
+				"types": ["5", "7"],
+				"why": "5 is too unstable for 6's need for family-like security. 7 is too detached for 6's warmth."
+			},
+			"ideal_mentor": {
+				"types": ["9", "33"],
+				"why": "9 models service at global scale. 33 embodies the master teacher."
+			}
+		},
+		"7": {
+			"ideal_cofounder": {
+				"types": ["3", "8"],
+				"why": "3 communicates what 7 discovers. 8 monetizes 7's knowledge. These partnerships turn expertise into empires."
+			},
+			"ideal_ops": {
+				"types": ["4", "2"],
+				"why": "4 handles operational detail. 2 manages the relationships 7 avoids."
+			},
+			"ideal_creative": {
+				"types": ["3", "5"],
+				"why": "3 translates 7's depth into accessible content. 5 brings market energy."
+			},
+			"friction_types": {
+				"types": ["1", "5"],
+				"why": "1 moves too fast without enough analysis. 5 is too scattered for 7's focus."
+			},
+			"ideal_mentor": {
+				"types": ["11", "9"],
+				"why": "11 matches 7's intuitive depth with vision. 9 expands 7's often narrow focus."
+			}
+		},
+		"8": {
+			"ideal_cofounder": {
+				"types": ["1", "7"],
+				"why": "1 matches 8's drive with initiative. 7 provides the deep expertise that gives 8 businesses a moat."
+			},
+			"ideal_ops": {
+				"types": ["4", "6"],
+				"why": "4 builds the infrastructure 8 designs. 6 creates the culture that retains talent."
+			},
+			"ideal_creative": {
+				"types": ["3", "5"],
+				"why": "3 adds personality to 8's brands. 5 brings market adaptability."
+			},
+			"friction_types": {
+				"types": ["8", "9"],
+				"why": "Two 8s create power conflicts. 9 may resist 8's material focus."
+			},
+			"ideal_mentor": {
+				"types": ["22", "1"],
+				"why": "22 models institutional scale. 1 reminds 8 that it starts with individual vision."
+			}
+		},
+		"9": {
+			"ideal_cofounder": {
+				"types": ["1", "8"],
+				"why": "1 provides practical initiative for 9's vision. 8 adds the financial structure humanitarian ventures need."
+			},
+			"ideal_ops": {
+				"types": ["4", "6"],
+				"why": "4 creates organizational backbone. 6 shares service orientation."
+			},
+			"ideal_creative": {
+				"types": ["3", "7"],
+				"why": "3 amplifies 9's message. 7 adds intellectual credibility."
+			},
+			"friction_types": {
+				"types": ["5", "8"],
+				"why": "5 lacks 9's commitment to cause. 8 may push too hard on profit over purpose."
+			},
+			"ideal_mentor": {
+				"types": ["11", "33"],
+				"why": "11 shares visionary capacity. 33 models service at the highest level."
+			}
+		},
+		"11": {
+			"ideal_cofounder": {
+				"types": ["4", "8"],
+				"why": "4 grounds 11's visionary energy. 8 builds the empire around 11's vision."
+			},
+			"ideal_ops": {
+				"types": ["4", "2"],
+				"why": "4 handles systems. 2 manages the sensitive interpersonal dynamics 11 creates."
+			},
+			"ideal_creative": {
+				"types": ["3", "9"],
+				"why": "3 translates 11's downloads into content. 9 adds humanitarian depth."
+			},
+			"friction_types": {
+				"types": ["1", "5"],
+				"why": "1 is too self-focused for 11's collaborative vision. 5 is too scattered for 11's intensity."
+			},
+			"ideal_mentor": {
+				"types": ["22", "33"],
+				"why": "22 shows how to build from vision. 33 models the master teacher path."
+			}
+		},
+		"22": {
+			"ideal_cofounder": {
+				"types": ["1", "11"],
+				"why": "1 provides initiative. 11 shares visionary capacity but adds intuitive dimension."
+			},
+			"ideal_ops": {
+				"types": ["4", "8"],
+				"why": "4 and 8 are the only numbers that can match 22's building capacity."
+			},
+			"ideal_creative": {
+				"types": ["3", "9"],
+				"why": "3 communicates 22's complex vision. 9 adds global scope."
+			},
+			"friction_types": {
+				"types": ["5", "3"],
+				"why": "5 and 3 are too scattered for 22's institutional focus."
+			},
+			"ideal_mentor": {
+				"types": ["8", "33"],
+				"why": "8 models material mastery. 33 models spiritual mastery. 22 needs both."
+			}
+		},
+		"33": {
+			"ideal_cofounder": {
+				"types": ["4", "8"],
+				"why": "4 creates structure for 33's teachings. 8 ensures financial sustainability of the mission."
+			},
+			"ideal_ops": {
+				"types": ["4", "6"],
+				"why": "4 handles practical systems. 6 shares service values."
+			},
+			"ideal_creative": {
+				"types": ["3", "11"],
+				"why": "3 amplifies the message. 11 adds visionary partnership."
+			},
+			"friction_types": {
+				"types": ["1", "8"],
+				"why": "1 may prioritize self over service. 8 may push profit over purpose."
+			},
+			"ideal_mentor": {
+				"types": ["9", "22"],
+				"why": "9 models humanitarian service. 22 models institutional building."
+			}
+		}
+	},
+
+	"action_plan_archetypes": {
+		"_note": "Maps dominant energy combinations to 90-day phase structures. Look up by Life Path for primary structure, modify by Expression for execution style.",
+
+		"analyst_builder": {
+			"applies_to": "LP7 + Expr8, LP7 + Expr4, LP4 + Expr8",
+			"phase_1_focus": "Research and validate. Spend days 1-30 deep-diving into one opportunity. Interview 5 potential customers or collaborators. Build your conviction through evidence, not excitement.",
+			"phase_1_avoid": "Starting to build anything. You will be tempted to skip validation and go straight to construction. Resist.",
+			"phase_2_focus": "Build the system. Days 31-60 are for creating the minimum viable version of whatever you validated. One product, one offer, one system. Your 4/8 energy wants to build it right — let it, but set a hard deadline.",
+			"phase_2_avoid": "Perfectionism. Your system does not need to be beautiful. It needs to work. Ship at 80%.",
+			"phase_3_focus": "Launch and measure. Days 61-90: put it in front of real humans. Your 7 will want to retreat to analysis. Your 8 needs to see revenue. Set a specific financial target and drive toward it.",
+			"phase_3_avoid": "Starting something new. The temptation will be strongest here. New ideas are procrastination in disguise.",
+			"permission_slips": [
+				"Permission to launch before it's perfect.",
+				"Permission to charge premium prices for your expertise.",
+				"Permission to ignore new ideas for 90 days."
+			]
+		},
+		"visionary_communicator": {
+			"applies_to": "LP3 + Expr8, LP1 + Expr3, LP3 + Expr1, LP9 + Expr3",
+			"phase_1_focus": "Choose ONE message. Days 1-30: distill your vision into a single, clear value proposition. Test it in content — 30 pieces in 30 days. See what resonates.",
+			"phase_1_avoid": "Building a product before you have an audience response. Your creative energy wants to make things. Channel it into content first.",
+			"phase_2_focus": "Build the audience engine. Days 31-60: double down on what worked in Phase 1. Create a simple opt-in or list. Start conversations with your most engaged followers.",
+			"phase_2_avoid": "Trying to monetize too early. Trust the process — audience first, product second.",
+			"phase_3_focus": "Make the first offer. Days 61-90: create a minimum viable offer based on what your audience has told you they need. Launch it to your list. Learn from the response.",
+			"phase_3_avoid": "Over-engineering the product. Your first offer should take less than a week to create.",
+			"permission_slips": [
+				"Permission to be imperfect in public.",
+				"Permission to sell before you feel ready.",
+				"Permission to focus on one platform only."
+			]
+		},
+		"intuitive_strategist": {
+			"applies_to": "LP7 + Pisces, LP7 + Scorpio, LP11 + any, LP9 + Expr7",
+			"phase_1_focus": "Listen and synthesize. Days 1-30: consume deeply in your niche. Read, watch, interview. Let your intuition process patterns. Journal daily — your best insights come through writing.",
+			"phase_1_avoid": "Forcing conclusions. Your intuition needs time. Don't rush to a plan until the vision crystallizes.",
+			"phase_2_focus": "Map the strategy. Days 31-60: translate your intuitive downloads into a concrete plan. One page. Three priorities. Five milestones. Your 7 energy loves this phase — let it structure the insight.",
+			"phase_2_avoid": "Staying in strategy mode indefinitely. Set a hard date for when planning ends and action begins.",
+			"phase_3_focus": "Execute with trust. Days 61-90: follow the plan even when doubt creeps in. Your Pisces/intuitive energy will second-guess under pressure. Trust the work you did in Phases 1-2.",
+			"phase_3_avoid": "Isolation. This is when you need external accountability most. Weekly check-ins with a partner or coach.",
+			"permission_slips": [
+				"Permission to trust your gut even when data is ambiguous.",
+				"Permission to ask for help during execution.",
+				"Permission to rest without guilt."
+			]
+		},
+		"driven_executor": {
+			"applies_to": "LP1 + Expr8, LP8 + Expr1, LP8 + Expr8, LP1 + Horse, LP8 + Horse",
+			"phase_1_focus": "Decide and commit. Days 1-30: pick the highest-leverage opportunity and go all in. You don't need more research — you need a decision. Make it in 72 hours, then spend the rest of the month building foundation.",
+			"phase_1_avoid": "Keeping options open. Your power comes from focus. Close every door except one.",
+			"phase_2_focus": "Scale the beachhead. Days 31-60: whatever worked in Phase 1, do more of it. Hire or delegate the tasks that slow you down. Your 8 energy needs leverage — create it.",
+			"phase_2_avoid": "Doing everything yourself. Your bottleneck is you. Fix that now.",
+			"phase_3_focus": "Systematize and expand. Days 61-90: build the systems that let growth continue without your daily involvement. Document processes. Train people. Your 8 energy builds empires — but only if you stop being the sole operator.",
+			"phase_3_avoid": "Burnout-as-badge-of-honor. You will push too hard. Schedule recovery before you need it.",
+			"permission_slips": [
+				"Permission to delegate imperfectly.",
+				"Permission to rest without losing momentum.",
+				"Permission to say no to everything that isn't your main focus."
+			]
+		},
+		"adaptive_builder": {
+			"applies_to": "LP5 + any, LP3 + Expr5, LP5 + Expr3, Any + Gemini, Any + Sagittarius",
+			"phase_1_focus": "Test fast. Days 1-30: run 3-5 small experiments. Different offers, different messages, different audiences. Your 5 energy excels at rapid iteration — use it strategically instead of chaotically.",
+			"phase_1_avoid": "Committing to anything permanently. This phase is for data gathering, not marriage.",
+			"phase_2_focus": "Double down on the winner. Days 31-60: pick the experiment that showed the most promise and go deep. This is the hardest phase for you — depth feels like a cage. It's actually a launchpad.",
+			"phase_2_avoid": "Starting new experiments. The data is in. Trust it.",
+			"phase_3_focus": "Build the first system. Days 61-90: take what's working and create a repeatable process. This is not natural for you — get a 4-energy partner or use templates.",
+			"phase_3_avoid": "Pivoting. If you pivot now, you restart the entire cycle. Commit through discomfort.",
+			"permission_slips": [
+				"Permission to be bored and keep going anyway.",
+				"Permission to build one thing instead of five.",
+				"Permission to ask structured thinkers for help."
+			]
+		},
+		"service_leader": {
+			"applies_to": "LP6 + any, LP2 + Expr6, LP9 + Expr6, Any + Cancer",
+			"phase_1_focus": "Define your service boundary. Days 1-30: get clear on WHO you serve and HOW — with a scope limit. Your 6 energy will try to help everyone. Narrowing feels wrong but unlocks growth.",
+			"phase_1_avoid": "Saying yes to every request. Practice the sentence: 'That's not my focus right now.'",
+			"phase_2_focus": "Package your care. Days 31-60: turn your natural service into a structured offering with clear pricing. You chronically undercharge — price 20% higher than feels comfortable.",
+			"phase_2_avoid": "Giving it away for free because someone 'needs' it. Value exchange matters.",
+			"phase_3_focus": "Build referral systems. Days 61-90: your loyal community IS your growth engine. Create a simple referral mechanism and ask your best clients to share.",
+			"phase_3_avoid": "Aggressive marketing that feels inauthentic. Your growth comes from depth of relationship, not breadth of reach.",
+			"permission_slips": [
+				"Permission to charge what you're worth.",
+				"Permission to say no to people who drain you.",
+				"Permission to put your business needs alongside others' needs."
+			]
+		}
+	},
+
+	"personal_year_business": {
+		"1": {
+			"theme": "The Launch Year",
+			"energy": "New beginnings, independence, initiative. This is the year to start what you've been planning. The energy supports bold, self-directed action.",
+			"business_focus": "Launch new ventures, establish new brand directions, make independent decisions. The energy favors originality and self-reliance.",
+			"watch_for": "Impatience with slow results. Year 1 plants seeds — harvest comes later. Don't abandon too early.",
+			"power_move": "Start the thing you've been researching."
+		},
+		"2": {
+			"theme": "The Partnership Year",
+			"energy": "Cooperation, patience, diplomacy. This year supports building relationships, not forcing outcomes. Slow down and collaborate.",
+			"business_focus": "Form partnerships, nurture key relationships, develop teamwork. Behind-the-scenes preparation. Joint ventures and collaborations favored.",
+			"watch_for": "Frustration with pace. Year 2 requires patience that feels unproductive. Trust the process.",
+			"power_move": "Invest in the relationship that will define your next chapter."
+		},
+		"3": {
+			"theme": "The Expression Year",
+			"energy": "Creativity, communication, visibility. Your ideas want to be expressed. Social energy is high. Creative projects flourish.",
+			"business_focus": "Content creation, marketing, brand building, public speaking, social media growth. Express your vision loudly.",
+			"watch_for": "Scattered creative energy. So many ideas, so little focus. Channel expression into one primary vehicle.",
+			"power_move": "Put yourself in front of your audience consistently."
+		},
+		"4": {
+			"theme": "The Foundation Year",
+			"energy": "Structure, discipline, hard work. Time to build the infrastructure that supports everything else. Not glamorous, but essential.",
+			"business_focus": "Systems building, process documentation, financial organization, operational improvement. Build the machine.",
+			"watch_for": "Feeling stuck or limited. Year 4 feels like walls are closing in. They're actually becoming a foundation.",
+			"power_move": "Build the system you wish you had last year."
+		},
+		"5": {
+			"theme": "The Change Year",
+			"energy": "Freedom, change, unexpected shifts. This year shakes things up. Adaptability is your greatest asset. Expect the unexpected.",
+			"business_focus": "Pivoting, exploring new markets, travel, networking outside your usual circles. Break out of routine.",
+			"watch_for": "Impulsive decisions. Change energy can feel like freedom but lead to chaos. Choose your changes deliberately.",
+			"power_move": "Make the change you've been avoiding."
+		},
+		"6": {
+			"theme": "The Responsibility Year",
+			"energy": "Service, family, community, responsibility. This year asks you to step up for others. Business growth through deepening existing relationships.",
+			"business_focus": "Customer experience improvement, team development, community building, service refinement. Deepen, don't expand.",
+			"watch_for": "Over-giving. The pull to sacrifice for others is strong. Maintain boundaries or burn out.",
+			"power_move": "Invest in your team and your best customers."
+		},
+		"7": {
+			"theme": "The Strategy Year",
+			"energy": "Reflection, analysis, inner work. This year favors research, study, and strategic planning over aggressive action. Quality over quantity.",
+			"business_focus": "Research and development, skill building, strategic planning, intellectual property creation. Go deep, not wide.",
+			"watch_for": "Withdrawal from business. The pull toward solitude is strong. Stay connected to your market even while studying.",
+			"power_move": "Create the intellectual property that becomes your moat."
+		},
+		"8": {
+			"theme": "The Power Year",
+			"energy": "Achievement, financial gain, authority. This is the harvest year — reap what you've sown. Financial matters are front and center.",
+			"business_focus": "Revenue scaling, investment, negotiation, power positioning. Make the big financial moves. Authority and recognition are available.",
+			"watch_for": "Overreach. Power energy can become greed. Stay ethical and sustainable.",
+			"power_move": "Make the financial decision you've been postponing."
+		},
+		"9": {
+			"theme": "The Completion Year",
+			"energy": "Endings, release, culmination. This year closes a 9-year cycle. Let go of what no longer serves. Clear space for the new cycle beginning next year.",
+			"business_focus": "Closing projects, releasing underperforming ventures, forgiveness, giving back. Tie up loose ends. Prepare for renewal.",
+			"watch_for": "Holding on. The urge to cling to what's ending is strong. Release creates space for Year 1's fresh start.",
+			"power_move": "Kill the project or relationship that you know is done."
+		}
+	},
+
+	"personal_month_business": {
+		"1": "Initiative month. Start something new. Make decisions independently. Best for launches and announcements.",
+		"2": "Partnership month. Collaborate, listen, negotiate. Best for relationship building and deal-making.",
+		"3": "Expression month. Create content, network, socialize. Best for marketing and brand visibility.",
+		"4": "Building month. Focus on operations, systems, organization. Best for infrastructure work.",
+		"5": "Change month. Adapt, pivot, experiment. Best for trying new approaches and breaking patterns.",
+		"6": "Service month. Focus on team, customers, community. Best for deepening loyalty and improving quality.",
+		"7": "Strategy month. Research, plan, reflect. Best for R&D and strategic decision-making.",
+		"8": "Power month. Push for results, negotiate hard, focus on revenue. Best for financial action.",
+		"9": "Completion month. Wrap up projects, release what's done, prepare for next cycle. Best for clearing the deck."
+	}
+}

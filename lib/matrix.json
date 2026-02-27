@@ -1,0 +1,706 @@
+{
+	"_meta": {
+		"version": "1.0.0",
+		"system": "Founder Frequency Strategic Business Profile",
+		"description": "Interpretation matrix mapping numerological and astrological values to business psychology traits. Each entry maps to the 7 report chapters plus burnout pattern.",
+		"chapters": [
+			"decision_making",
+			"wealth_building",
+			"risk_tolerance",
+			"leadership_energy",
+			"scaling_strength",
+			"emotional_blind_spots",
+			"ideal_revenue_models"
+		],
+		"usage": "Look up subject's values across all 5 systems. For each chapter, gather the trait from each system, then use the combination_rules to blend them into cohesive narrative."
+	},
+
+	"life_path": {
+		"1": {
+			"archetype": "The Pioneer",
+			"decision_making": "Fast, instinctive, self-trusting. Makes decisions independently and resists group consensus. Can appear reckless but operates on strong internal compass. Danger: ignores advisors.",
+			"wealth_building": "Self-made wealth pattern. Builds from scratch rather than inheriting systems. Monetizes through original ideas, first-mover advantage, and personal brand authority. Needs ownership stake in everything.",
+			"risk_tolerance": "High baseline. Comfortable being first. Embraces uncertainty as fuel. Blind spot: underestimates operational risk because focus is on vision. Takes risks others won't, and this works more often than it should.",
+			"leadership_energy": "Directive, visionary, sometimes autocratic. Inspires through boldness. Struggles to share power. Team loyalty comes from excitement, not safety. Can burn through collaborators.",
+			"scaling_strength": "Excels at 0-to-1 creation. Struggles with 1-to-100 scaling because maintenance bores them. Needs a strong #2 to systematize what they start. Scaling breaks when founder tries to do everything.",
+			"emotional_blind_spots": "Ego attachment to being first/original. Dismisses ideas not invented here. Loneliness from self-reliance. Interprets delegation as weakness. Cannot see when stubbornness becomes self-sabotage.",
+			"ideal_revenue_models": [
+				"Personal brand monetization",
+				"Founder-led product companies",
+				"Consulting (as the visionary)",
+				"Invention/patent licensing",
+				"First-mover market plays"
+			],
+			"burnout_pattern": "Burns out from isolation and carrying too much alone. Recovery requires permission to need others."
+		},
+		"2": {
+			"archetype": "The Diplomat",
+			"decision_making": "Collaborative and deliberate. Seeks input before committing. Excels in partnership decisions. Danger: indecisiveness when alone. Needs external validation to feel confident in choices.",
+			"wealth_building": "Wealth through partnerships and relationships. Natural connector who profits by being the bridge. Joint ventures, affiliate models, and relationship-based sales are natural. Rarely builds solo empires.",
+			"risk_tolerance": "Low to moderate. Prefers shared risk. Will take substantial risks within a trusted partnership but avoids solo exposure. Risk aversion increases under emotional stress.",
+			"leadership_energy": "Supportive, mediating, behind-the-scenes influential. Leads through emotional intelligence and coalition building. Not a stage presence but the person everyone trusts privately.",
+			"scaling_strength": "Excels at team cohesion and partnership scaling. Builds strong cultures. Struggles with aggressive growth that requires confrontation or firing people. Scaling stalls when tough people decisions are avoided.",
+			"emotional_blind_spots": "People-pleasing that compromises business judgment. Stays in bad partnerships too long. Absorbs others' stress. Avoids conflict until it explodes. Undervalues own contributions.",
+			"ideal_revenue_models": [
+				"Partnership-based ventures",
+				"Affiliate marketing",
+				"Mediation/coaching services",
+				"Relationship management platforms",
+				"Community-driven businesses"
+			],
+			"burnout_pattern": "Burns out from over-giving. Takes on others' emotional load. Recovery requires boundaries and solo time."
+		},
+		"3": {
+			"archetype": "The Performer",
+			"decision_making": "Emotion-led and intuitive. Decides based on excitement and creative resonance. Fast to commit, fast to pivot. Danger: chases the next shiny thing. Decisions feel inspired but may lack follow-through analysis.",
+			"wealth_building": "Monetizes through communication, entertainment, and personal expression. Natural content creator, speaker, influencer. Wealth comes in waves tied to creative output. Inconsistent income unless systemized.",
+			"risk_tolerance": "High for creative risks, low for boring operational risks. Will bet everything on a creative vision but avoids financial complexity. Risk appetite tied to emotional state — manic highs lead to overcommitment.",
+			"leadership_energy": "Charismatic, inspiring, energizing. People follow because they feel alive in this person's presence. Struggles with discipline enforcement and boring management tasks. Morale builder, not operations manager.",
+			"scaling_strength": "Content scales naturally (audience growth). Business operations do not scale because 3 energy resists systematization. Needs operational partner. Creative output is the engine; everything else is fuel.",
+			"emotional_blind_spots": "Scattered energy across too many ideas. Emotional dependency on audience validation. Creative blocks trigger existential crisis. Cannot distinguish inspiration from distraction. Avoids tedious but necessary work.",
+			"ideal_revenue_models": [
+				"Content creation/media",
+				"Speaking/performance",
+				"Creative consulting",
+				"Entertainment IP",
+				"Brand sponsorships",
+				"Course creation"
+			],
+			"burnout_pattern": "Burns out from creative exhaustion and scattered focus. Recovery requires creative play with no monetization pressure."
+		},
+		"4": {
+			"archetype": "The Builder",
+			"decision_making": "Methodical, process-driven, risk-aware. Builds decision frameworks and follows them. Slow but highly reliable. Danger: misses time-sensitive opportunities. Paralysis when systems don't provide clear answer.",
+			"wealth_building": "Wealth through systems, processes, and steady accumulation. Real estate, operations-heavy businesses, manufacturing, infrastructure. Not flashy but durable wealth. Compound interest is their best friend.",
+			"risk_tolerance": "Low. Strong preference for proven models. Will invest heavily in what's working rather than speculate on what might. Calculates downside obsessively. Takes risk only with extensive safety nets.",
+			"leadership_energy": "Organized, dependable, clear expectations. Leads through structure and consistency. Teams trust the stability. Can be rigid and resistant to innovation. Management by systems, not charisma.",
+			"scaling_strength": "Exceptional at systematization and process scaling. Can take a messy operation and make it efficient. Struggles with innovation-driven scaling. Growth comes from optimization, not reinvention.",
+			"emotional_blind_spots": "Rigidity mistaken for discipline. Resistance to change dressed as caution. Control issues that stifle team creativity. Workaholism normalized as dedication. Fear of the unconventional.",
+			"ideal_revenue_models": [
+				"Operations-heavy businesses",
+				"Real estate",
+				"Franchise models",
+				"Process consulting",
+				"SaaS platforms",
+				"Manufacturing"
+			],
+			"burnout_pattern": "Burns out from overwork and rigidity. Recovery requires breaking routine and embracing spontaneity."
+		},
+		"5": {
+			"archetype": "The Disruptor",
+			"decision_making": "Fast, adaptable, sometimes impulsive. Thrives in dynamic environments. Decides by feel and market timing. Danger: commitment phobia. Reverses decisions frequently. Excellent in crisis, unreliable in stability.",
+			"wealth_building": "Wealth through change, travel, variety, and market disruption. Multiple income streams natural. Struggles to build single deep revenue source. Money comes and goes in cycles tied to adventure.",
+			"risk_tolerance": "Very high. Seeks risk actively. Bored without it. Comfortable with uncertainty that paralyzes others. Blind spot: cannot distinguish between strategic risk and recklessness when bored.",
+			"leadership_energy": "Dynamic, exciting, unpredictable. People follow for the adventure. High turnover because stability-seeking team members can't keep up. Best in startups and turnaround situations.",
+			"scaling_strength": "Excellent at market disruption and rapid pivoting. Terrible at maintenance scaling. Needs to hand off to 4 or 8 energy operators once the exciting phase ends. Scaling breaks when boredom triggers a pivot.",
+			"emotional_blind_spots": "Commitment avoidance disguised as flexibility. Restlessness interpreted as strategy. Inability to sit with discomfort of the boring middle. Addictive tendencies toward novelty. Excess everywhere.",
+			"ideal_revenue_models": [
+				"Travel/experience businesses",
+				"Market disruption plays",
+				"Sales/commission roles",
+				"Multiple freelance streams",
+				"Event-based businesses",
+				"Trading"
+			],
+			"burnout_pattern": "Burns out from boredom, not overwork. Recovery requires new stimulation — but structured, not scattered."
+		},
+		"6": {
+			"archetype": "The Nurturer",
+			"decision_making": "Values-driven and community-oriented. Decisions filtered through 'how does this affect people I care about.' Slow when personal relationships are at stake. Strong moral compass guides all business choices.",
+			"wealth_building": "Wealth through service, beauty, home, and community. Hospitality, wellness, education, family businesses. Profits when helping others genuinely. Struggles to charge what they're worth.",
+			"risk_tolerance": "Low to moderate. Risk tolerance increases when protecting/serving others. Will take big risks for family or community but avoids personal financial speculation. Security-oriented.",
+			"leadership_energy": "Nurturing, protective, high emotional intelligence. Creates family-like team cultures. Can become controlling or paternalistic. Excels with small loyal teams. Struggles with large-scale impersonal management.",
+			"scaling_strength": "Builds incredibly loyal customer bases. Word-of-mouth growth engine. Struggles with aggressive scaling that feels impersonal. Growth stalls when quality/care can't be maintained at scale.",
+			"emotional_blind_spots": "Martyrdom mistaken for service. Over-responsibility for others' outcomes. Guilt around prioritizing profit. Controlling behavior dressed as care. Cannot say no to people who need help.",
+			"ideal_revenue_models": [
+				"Service businesses",
+				"Wellness/health",
+				"Education",
+				"Hospitality",
+				"Community platforms",
+				"Family business",
+				"Coaching"
+			],
+			"burnout_pattern": "Burns out from over-caring. Takes everyone's problems personally. Recovery requires learning selfishness is not the same as self-care."
+		},
+		"7": {
+			"archetype": "The Analyst",
+			"decision_making": "Research-intensive, evidence-based, internally deliberative. Trusts own analysis over group opinion. Reaches conclusions through deep study. Danger: analysis paralysis. Knows the answer but keeps validating.",
+			"wealth_building": "Wealth through specialized knowledge, intellectual property, and expertise monetization. Research, consulting, proprietary methods, technology. Knowledge-to-capital pipeline. Not built for commodity businesses.",
+			"risk_tolerance": "Moderate with high analytical component. Takes calculated risks based on deep research. Risk tolerance spikes when pattern recognition confirms opportunity. Avoids risks they can't fully understand.",
+			"leadership_energy": "Authority through mastery. Quiet, competent, respected for depth. Not charismatic in traditional sense but commands intellectual respect. Struggles with emotional leadership and team motivation.",
+			"scaling_strength": "Builds deep expertise moats. Scales through intellectual property and systematized knowledge. Struggles with the 'people management' side of scaling. Growth requires trusting others with quality.",
+			"emotional_blind_spots": "Intellectual superiority that alienates collaborators. Isolation under stress. Perfectionism that delays shipping. Trust issues with partners. Analysis as emotional avoidance. Difficulty asking for help.",
+			"ideal_revenue_models": [
+				"Consulting (deep expertise)",
+				"Research/analysis services",
+				"Technology/SaaS",
+				"Publishing/thought leadership",
+				"Technical training",
+				"Patent/IP licensing"
+			],
+			"burnout_pattern": "Burns out from overstimulation and forced social interaction. Recovery requires solitude, nature, and unstructured research time."
+		},
+		"8": {
+			"archetype": "The Power Builder",
+			"decision_making": "Strategic, outcome-focused, financially calibrated. Decisions always filtered through ROI lens. Confident and commanding when stakes are high. Danger: can steamroll others' input when money is involved.",
+			"wealth_building": "Most financially charged number. Empire-building frequency. Wealth through leverage, systems, ownership, and scale. Not content with small wins — needs substantial financial outcomes. Experiences financial extremes.",
+			"risk_tolerance": "High for strategic, calculated risks. Comfortable with large financial exposure when analysis supports it. Risk tolerance is tied to perceived control — avoids risks they can't influence. Power-oriented risk-taking.",
+			"leadership_energy": "Commanding, strategic, results-driven. Natural executive presence. Can intimidate without intending to. Builds hierarchical organizations. Delegates effectively but demands results. Respect through achievement.",
+			"scaling_strength": "Built for scale. Thinks in systems, leverage, and multiplication. Natural at building organizations, raising capital, and structuring deals. Scaling breaks only when ego conflicts with market reality.",
+			"emotional_blind_spots": "Workaholism normalized as ambition. Relationship neglect. Difficulty separating self-worth from net worth. Power dynamics in personal relationships. Burnout denial. Material success masking spiritual emptiness.",
+			"ideal_revenue_models": [
+				"Scalable businesses",
+				"Real estate empires",
+				"Investment/finance",
+				"Executive consulting",
+				"Franchise/licensing",
+				"Acquisition strategies",
+				"High-ticket services"
+			],
+			"burnout_pattern": "Burns out from relentless drive and inability to stop. Recovery requires confronting the identity crisis of 'who am I without achievement.'"
+		},
+		"9": {
+			"archetype": "The Humanitarian",
+			"decision_making": "Big-picture, mission-driven, sometimes impractical. Decisions guided by impact and legacy. Struggles with decisions that are profitable but not meaningful. Can be indecisive when profit and purpose conflict.",
+			"wealth_building": "Wealth through service at scale. Social enterprises, global reach, cause-driven businesses. Money flows when mission is genuine. Financial challenges arise from giving too much away or undercharging.",
+			"risk_tolerance": "Moderate to high for mission-aligned risks. Will bet everything on a cause they believe in. Low tolerance for purely financial speculation with no social component. Risk profile tied to meaning.",
+			"leadership_energy": "Inspiring, globally minded, principled. Attracts idealistic teams. Struggles with day-to-day management and financial discipline. Leads movements more than organizations.",
+			"scaling_strength": "Scales through movement building and global networks. Struggles with profit-oriented scaling that requires cutting costs or people. Growth stalls when mission drift threatens authenticity.",
+			"emotional_blind_spots": "Savior complex. Difficulty with endings and letting go. Giving away too much value. Attracting people who take advantage of generosity. Naivete about financial realities. Perfectionism about impact.",
+			"ideal_revenue_models": [
+				"Social enterprises",
+				"Nonprofits/foundations",
+				"Global consulting",
+				"Cause-driven brands",
+				"Teaching/mentoring at scale",
+				"Impact investing"
+			],
+			"burnout_pattern": "Burns out from compassion fatigue and feeling like they're not doing enough. Recovery requires accepting imperfect impact."
+		},
+		"11": {
+			"archetype": "The Visionary Intuitive",
+			"decision_making": "Highly intuitive with flashes of insight. Can see outcomes before data confirms. When trusted, decisions are remarkably prescient. Danger: overwhelm from too much intuitive input. Nervous energy around major choices.",
+			"wealth_building": "Wealth through visionary ideas and inspirational leadership. High-profile, high-impact ventures. Financial extremes — big wins and big losses. Needs grounded partner to manage practical finances.",
+			"risk_tolerance": "Extreme variability. Can be paralyzed by anxiety or suddenly fearless when vision is clear. Risk tolerance is tied to alignment with spiritual/intuitive guidance rather than analysis.",
+			"leadership_energy": "Inspirational, almost prophetic. People follow the vision. Nervous energy can destabilize teams. Needs to be protected from operational overwhelm. Best as visionary leader with strong operational support.",
+			"scaling_strength": "Builds movements and paradigm shifts. Terrible at operational scaling. Needs complete delegation of systems building. Scaling succeeds when the vision is so compelling it attracts operational talent.",
+			"emotional_blind_spots": "Anxiety and self-doubt despite brilliance. Nervous exhaustion. Sensitivity to criticism. Taking on too much responsibility for collective outcomes. Spiritual bypassing of practical problems.",
+			"ideal_revenue_models": [
+				"Visionary leadership/speaking",
+				"Innovation consulting",
+				"Spiritual/transformational businesses",
+				"Media/publishing",
+				"Movement building"
+			],
+			"burnout_pattern": "Burns out from nervous system overload. Needs extensive decompression, silence, and spiritual practice to function."
+		},
+		"22": {
+			"archetype": "The Master Builder",
+			"decision_making": "Combines visionary intuition with practical execution capability. Makes decisions that balance inspired vision with structural feasibility. Danger: the weight of potential creates decision paralysis — every choice feels monumental.",
+			"wealth_building": "Highest wealth potential in numerology. Builds lasting institutions, infrastructure, and systems that serve many. Wealth comes from creating things that outlast the builder. Legacy wealth.",
+			"risk_tolerance": "Moderate with a long time horizon. Takes enormous strategic risks but only with meticulous planning. Combines 11's vision with 4's structural analysis. Comfort with decade-long bets.",
+			"leadership_energy": "Institutional leader. Builds organizations, movements, and systems that persist. Carries enormous pressure. Can appear superhuman to teams. Danger of burnout from carrying too much.",
+			"scaling_strength": "Built for massive scale. Thinks in terms of institutions, not businesses. Can build empires if they manage the internal pressure. Scaling is natural but the psychological weight is immense.",
+			"emotional_blind_spots": "Crushing pressure of unrealized potential. Feeling like nothing is ever enough. Workaholism as destiny fulfillment. Difficulty with ordinary human needs. Isolation at the top.",
+			"ideal_revenue_models": [
+				"Institutional building",
+				"Infrastructure companies",
+				"Large-scale platforms",
+				"Real estate development",
+				"Foundation/endowment creation"
+			],
+			"burnout_pattern": "Burns out from the weight of their own potential. Recovery requires permission to be ordinary temporarily."
+		},
+		"33": {
+			"archetype": "The Master Teacher",
+			"decision_making": "Guided by highest service principles. Decisions filtered through 'what serves the most people.' Can neglect personal financial needs in pursuit of collective good. Extremely rare in practice.",
+			"wealth_building": "Wealth through teaching, healing, and serving at massive scale. Often experiences financial sacrifice for mission. When balanced, creates enormous value and receives proportionally.",
+			"risk_tolerance": "Low for personal gain, extremely high for service-oriented ventures. Will risk everything for what they believe serves humanity. Financial risk is acceptable only in service context.",
+			"leadership_energy": "Spiritual authority. Leads through example and sacrifice. Can attract cult-like devotion. Must maintain humility. Exhausting leadership frequency that requires extensive self-care.",
+			"scaling_strength": "Scales through inspiration and teaching. Builds movements of students/followers. Needs protection from exploitation by those who monetize the teacher's work.",
+			"emotional_blind_spots": "Martyr complex. Inability to receive. Spiritual superiority. Neglect of personal needs. Attracting energy vampires. Difficulty setting boundaries.",
+			"ideal_revenue_models": [
+				"Teaching platforms",
+				"Spiritual/healing businesses",
+				"Nonprofit leadership",
+				"Publishing/media"
+			],
+			"burnout_pattern": "Burns out from giving without receiving. Recovery requires radical self-care and learning to receive."
+		}
+	},
+
+	"birthday_number": {
+		"_note": "Birthday numbers map to the same base number as Life Path but with emphasis on INNATE TALENT rather than life mission. These modify HOW the person executes their Life Path purpose.",
+		"1": {
+			"talent": "Self-starting initiative",
+			"business_gift": "Can launch without permission or support"
+		},
+		"2": {
+			"talent": "Diplomatic sensitivity",
+			"business_gift": "Reads partnership dynamics intuitively"
+		},
+		"3": {
+			"talent": "Creative communication",
+			"business_gift": "Makes complex ideas accessible and engaging"
+		},
+		"4": {
+			"talent": "Structural organization",
+			"business_gift": "Builds reliable systems naturally"
+		},
+		"5": {
+			"talent": "Adaptive versatility",
+			"business_gift": "Pivots faster than competitors"
+		},
+		"6": {
+			"talent": "Nurturing service",
+			"business_gift": "Creates customer loyalty through genuine care"
+		},
+		"7": {
+			"talent": "Analytical depth",
+			"business_gift": "Sees patterns others miss completely"
+		},
+		"8": {
+			"talent": "Financial intuition",
+			"business_gift": "Naturally structures deals and power dynamics"
+		},
+		"9": {
+			"talent": "Universal empathy",
+			"business_gift": "Builds globally resonant brands and messages"
+		},
+		"11": {
+			"talent": "Intuitive vision",
+			"business_gift": "Senses market shifts before data confirms them"
+		},
+		"22": {
+			"talent": "Architectural thinking",
+			"business_gift": "Designs systems that serve thousands"
+		},
+		"33": {
+			"talent": "Inspirational teaching",
+			"business_gift": "Transforms people through communication"
+		}
+	},
+
+	"birthday_compound": {
+		"_note": "For compound birthday numbers (10-31), the compound adds nuance to the reduced digit. Key compounds only.",
+		"10": "Pure 1 energy amplified. Extra independence and originality.",
+		"11": "Master Number. Intuitive amplifier. See master_numbers section.",
+		"12": "Creative communicator (3) through experience and growth (12). Expresses complex ideas simply. Natural teacher-entertainer hybrid.",
+		"13": "KARMIC DEBT. Builder (4) who must earn success through persistent effort. Past-life pattern of cutting corners. This life demands discipline. Business: early failures teach essential lessons.",
+		"14": "KARMIC DEBT. Freedom-seeker (5) who must learn moderation. Past-life excess. This life demands balance between freedom and responsibility. Business: beware addictive risk-taking.",
+		"15": "Nurturing communicator. Magnetic personality with strong creative gifts. Natural at building community through personal charm.",
+		"16": "KARMIC DEBT. Analyst (7) whose ego must be humbled. Past-life intellectual arrogance. This life brings ego-dissolving experiences that deepen wisdom. Business: success after humility.",
+		"17": "Spiritual analyst. Strong intuition combined with analytical mind. Business: excels in research-driven ventures with deeper purpose.",
+		"18": "Humanitarian power builder. Combines service (9) with material capability (8/1). Business: social enterprise natural.",
+		"19": "KARMIC DEBT. Leader (1) who must learn to accept help. Past-life abuse of power or excessive independence. Business: must build genuine collaboration skills.",
+		"20": "Amplified 2. Extra sensitivity and partnership orientation. Business: thrives in collaborative ventures, struggles solo.",
+		"21": "Creative leader. Combines expression (3) with initiative (1). Business: natural at creative direction and brand building.",
+		"22": "Master Number. Master Builder energy. See master_numbers section.",
+		"23": "Communicator with freedom drive. Natural marketer who needs variety. Business: excels in fast-paced media/marketing.",
+		"24": "Nurturing builder. Creates structures that serve people. Business: service-oriented operations excel.",
+		"25": "Analytical freedom-seeker. Combines research (7) with adaptability (5). Business: innovation consulting natural.",
+		"26": "Power nurturer. Combines material ambition (8) with service (6). Business: luxury service or high-end hospitality.",
+		"27": "Humanitarian analyst. Combines global vision (9) with deep research (7). Business: research for social impact.",
+		"28": "Independent power builder. Strong 1 energy within 8 framework. Business: entrepreneurial empire builder.",
+		"29": "Intuitive humanitarian. Combines master intuition (11) with service (9). Business: visionary social ventures.",
+		"30": "Amplified creative expression. Pure 3 energy. Business: creative fields, entertainment, speaking.",
+		"31": "Creative builder. Combines expression (3) with structure (4). Business: systematized creative production."
+	},
+
+	"western_zodiac": {
+		"Aries": {
+			"element": "Fire",
+			"modality": "Cardinal",
+			"decision_style": "Impulsive, action-first, course-corrects later. Trusts gut over data. Fastest decision-maker in the zodiac.",
+			"money_pattern": "Earns through boldness and initiative. Spends impulsively. Needs systems to save. Good at generating income, poor at wealth preservation.",
+			"risk_profile": "Very high tolerance. Sees risk as challenge, not threat. Can be reckless. Best at calculated aggression in competitive markets.",
+			"leadership": "Directive, high-energy, competitive. Inspires through action. Can be impatient with slow team members. Crisis leader.",
+			"blind_spots": "Impatience, burnout from going too hard too fast, inability to delegate, competitive ego, starting without finishing.",
+			"scaling": "Fast launcher, poor maintainer. Needs patient operators behind them. Scaling works through speed-to-market advantage.",
+			"revenue_affinity": [
+				"Sales-driven businesses",
+				"Competitive markets",
+				"Speed-to-market plays",
+				"Commission-based income"
+			]
+		},
+		"Taurus": {
+			"element": "Earth",
+			"modality": "Fixed",
+			"decision_style": "Slow, deliberate, sensory-guided. Once decided, immovable. Values comfort and security in all choices. Danger: stubbornness mistaken for conviction.",
+			"money_pattern": "Natural wealth accumulator. Patient investor. Values quality over quantity. Drawn to luxury, beauty, and tangible assets. Steady earner.",
+			"risk_profile": "Low. Prefers proven models. Extremely patient with compound growth. Will not gamble. Security-oriented. Risk tolerance only for tangible assets they can see/touch.",
+			"leadership": "Steady, reliable, calming presence. Leads by example and consistency. Stubborn but dependable. Teams feel safe. Slow to change direction.",
+			"blind_spots": "Resistance to change, comfort zone addiction, possessiveness with ideas/resources, missed opportunities from hesitation, material attachment.",
+			"scaling": "Slow but permanent growth. Once scaled, extremely durable. Builds brands that last decades. Struggles with rapid pivots.",
+			"revenue_affinity": [
+				"Real estate",
+				"Luxury goods",
+				"Food/agriculture",
+				"Long-term investments",
+				"Beauty/aesthetics businesses"
+			]
+		},
+		"Gemini": {
+			"element": "Air",
+			"modality": "Mutable",
+			"decision_style": "Rapid processing, sees all angles simultaneously. Can argue both sides. Danger: indecision from seeing too many options. Needs external deadline pressure.",
+			"money_pattern": "Multiple income streams natural. Intellectual monetization. Can talk their way into opportunity. Income fluctuates with attention span.",
+			"risk_profile": "Moderate and variable. Risk appetite changes with mood and information. Good at hedging. Diversifies naturally. Danger: spreading too thin.",
+			"leadership": "Communicative, adaptable, idea-rich. Leads through intellectual stimulation. Can confuse teams with constant direction changes. Best in fast-paced, creative environments.",
+			"blind_spots": "Superficiality, commitment phobia, gossip/information leaks, scattered focus, promising more than delivering, boredom with follow-through.",
+			"scaling": "Scales through communication and networking. Struggles with operational depth. Growth comes from reach, not depth. Needs focused operators.",
+			"revenue_affinity": [
+				"Media/communications",
+				"Sales",
+				"Education",
+				"Marketing agencies",
+				"Multiple small businesses",
+				"Writing/publishing"
+			]
+		},
+		"Cancer": {
+			"element": "Water",
+			"modality": "Cardinal",
+			"decision_style": "Emotionally intelligent, security-oriented. Decides based on gut feeling and protective instinct. Strong business intuition when not clouded by fear.",
+			"money_pattern": "Saves naturally. Builds financial security for family/inner circle. Shrewd with money despite emotional exterior. Real estate and home-based businesses natural.",
+			"risk_profile": "Low to moderate. Takes risks to protect or provide for family. Avoids exposure that threatens home security. Risk tolerance increases when protecting loved ones.",
+			"leadership": "Protective, emotionally attuned, creates family-like cultures. Remembers everything — loyal to loyal people, dangerous when betrayed. Best with small, close teams.",
+			"blind_spots": "Over-protectiveness that limits growth, mood-driven decisions, holding grudges, difficulty separating business from personal emotion, hoarding resources.",
+			"scaling": "Builds incredibly loyal customer bases. Scales through trust and repeat business. Struggles with impersonal mass-market scaling. Growth through community depth.",
+			"revenue_affinity": [
+				"Home-based businesses",
+				"Real estate",
+				"Food/hospitality",
+				"Family services",
+				"Subscription models (safety/security)",
+				"Childcare/education"
+			]
+		},
+		"Leo": {
+			"element": "Fire",
+			"modality": "Fixed",
+			"decision_style": "Confident, dramatic, self-referencing. Decides based on vision and personal brand alignment. Strong convictions. Danger: ego-driven choices that don't serve the business.",
+			"money_pattern": "Earns through visibility and authority. Generous spender. Needs luxury. Drawn to high-profile, high-reward ventures. Wealth through performance and leadership.",
+			"risk_profile": "High for reputation-building risks. Will invest heavily in personal brand and visibility. Avoids risks that could cause public embarrassment. Pride-oriented risk assessment.",
+			"leadership": "Natural commander. Magnetic, generous, expects loyalty. Inspires through vision and personal charisma. Can be domineering. Builds cult-of-personality organizations.",
+			"blind_spots": "Ego sensitivity, need for constant recognition, over-spending on image, difficulty accepting criticism, blind loyalty to flatterers, delegating praise but not blame.",
+			"scaling": "Scales through personal brand and media presence. Organization grows around the leader's identity. Risk: business too dependent on founder's reputation.",
+			"revenue_affinity": [
+				"Personal brand businesses",
+				"Entertainment",
+				"Luxury goods",
+				"Executive roles",
+				"Speaking/coaching",
+				"Creative direction"
+			]
+		},
+		"Virgo": {
+			"element": "Earth",
+			"modality": "Mutable",
+			"decision_style": "Detail-oriented, analytical, improvement-focused. Makes decisions through systematic evaluation. Danger: perfectionism causes missed deadlines. Can't launch until perfect.",
+			"money_pattern": "Efficient and disciplined. Minimizes waste. Earns through competence and reliability. Undercharges for quality work. Wealth through optimization and smart allocation.",
+			"risk_profile": "Low. Calculates obsessively. Only takes risks with extensive contingency plans. Excels at risk mitigation. Danger: over-analysis prevents any risk-taking at all.",
+			"leadership": "Service-oriented, detail-focused, high standards. Leads by doing the work better than anyone. Can be critical and micromanaging. Teams deliver quality but may feel scrutinized.",
+			"blind_spots": "Perfectionism paralysis, criticism that demotivates teams, undervaluing big-picture thinking, health anxiety under stress, inability to celebrate wins, imposter syndrome.",
+			"scaling": "Scales through process optimization and quality systems. Struggles with 'good enough' shipping. Growth through operational excellence. Needs visionary partner for direction.",
+			"revenue_affinity": [
+				"Service optimization",
+				"Health/wellness",
+				"Technical consulting",
+				"Quality assurance",
+				"Data analysis",
+				"Process improvement"
+			]
+		},
+		"Libra": {
+			"element": "Air",
+			"modality": "Cardinal",
+			"decision_style": "Weighs all options meticulously. Seeks fairness and balance. Excellent negotiator. Danger: chronic indecisiveness from seeing every perspective equally.",
+			"money_pattern": "Earns through partnerships, aesthetics, and negotiation. Values beauty and harmony in business. Fair dealer. Can overspend on appearance and environment.",
+			"risk_profile": "Moderate. Prefers balanced, hedged positions. Natural at contracts and deal structure. Avoids conflict-heavy risks. Risk tolerance increases in partnerships.",
+			"leadership": "Collaborative, fair, consensus-seeking. Leads through mediation and vision for harmony. Can be indecisive in crisis. Teams appreciate fairness but may crave stronger direction.",
+			"blind_spots": "Indecisiveness dressed as fairness, conflict avoidance, people-pleasing in negotiations, over-investment in appearance, inability to fire or confront.",
+			"scaling": "Scales through partnerships and beautiful brand presentation. Struggles with tough operational decisions required at scale. Growth through collaboration and aesthetics.",
+			"revenue_affinity": [
+				"Design/aesthetics",
+				"Partnership ventures",
+				"Legal/mediation",
+				"Luxury brands",
+				"Art/culture businesses",
+				"Relationship platforms"
+			]
+		},
+		"Scorpio": {
+			"element": "Water",
+			"modality": "Fixed",
+			"decision_style": "Penetrating, strategic, power-conscious. Decisions made through deep investigation and instinct. Holds cards close. Danger: paranoia and control in decision processes.",
+			"money_pattern": "Wealth through transformation, investment, and other people's resources. Natural at managing OPM (other people's money). Private about finances. Power through financial leverage.",
+			"risk_profile": "High for strategic, controlled risks. Comfortable with high stakes when they control information. Risk as power tool. Avoids risks where they can't see all variables. Calculated intensity.",
+			"leadership": "Intense, transformational, commanding. Inspires deep loyalty through intensity and protection. Can be controlling and secretive. Teams are devoted or intimidated.",
+			"blind_spots": "Control obsession, trust issues, secrecy that prevents collaboration, intensity that burns people out, revenge motivation, all-or-nothing thinking.",
+			"scaling": "Scales through depth, transformation, and strategic leverage. Builds powerful organizations through controlled growth. Struggles with transparency required at public scale.",
+			"revenue_affinity": [
+				"Investment/finance",
+				"Transformation consulting",
+				"Research/investigation",
+				"Psychology/therapy",
+				"Crisis management",
+				"High-stakes negotiation"
+			]
+		},
+		"Sagittarius": {
+			"element": "Fire",
+			"modality": "Mutable",
+			"decision_style": "Optimistic, big-picture, opportunity-focused. Decides based on growth potential and adventure. Danger: over-optimism and commitment to too many expansions simultaneously.",
+			"money_pattern": "Earns through expansion, education, and international ventures. Generous and sometimes reckless with money. Wealth through big bets that pay off. Feast-or-famine pattern.",
+			"risk_profile": "Very high. Natural gambler and optimist. Sees opportunity everywhere. Under-prices downside risk. Best in expansionary markets. Danger: overextension.",
+			"leadership": "Inspiring, philosophical, freedom-granting. Leads by painting big visions. Gives team freedom. Can be absent and overcommitted. Best at inspiring, not managing.",
+			"blind_spots": "Over-optimism, overcommitment, tactlessness, inability to focus on details, promise more than deliver, escape when things get hard, philosophy over practicality.",
+			"scaling": "Scales through expansion into new markets/territories. Natural internationalizer. Struggles with the boring consolidation phase. Growth through reach and vision.",
+			"revenue_affinity": [
+				"Education/publishing",
+				"Travel/international",
+				"Coaching/mentoring",
+				"Franchise expansion",
+				"Media/broadcasting",
+				"Import/export"
+			]
+		},
+		"Capricorn": {
+			"element": "Earth",
+			"modality": "Cardinal",
+			"decision_style": "Strategic, long-term, authority-conscious. Makes decisions for 10-year outcomes. Patient and disciplined. Danger: excessive caution and pessimism in early career.",
+			"money_pattern": "Wealth through persistent climbing and institutional power. Late bloomer financially. Builds slowly but permanently. Status-conscious spending. Legacy wealth builder.",
+			"risk_profile": "Low to moderate. Calculated and patient. Prefers risks with long time horizons and structural advantage. Avoids speculation. Increases risk tolerance with age and experience.",
+			"leadership": "Authoritative, structured, demanding. Builds hierarchies and clear advancement paths. Teams respect competence. Can be cold and status-obsessed. CEO energy.",
+			"blind_spots": "Excessive pessimism, status obsession, coldness in relationships, using people for advancement, depression when progress stalls, difficulty enjoying present success.",
+			"scaling": "Master scaler. Builds durable institutions. Patient with compound growth. Scaling is their primary talent. Growth through structure, discipline, and strategic positioning.",
+			"revenue_affinity": [
+				"Corporate leadership",
+				"Institutional building",
+				"Government/policy",
+				"Real estate development",
+				"Finance/banking",
+				"Consulting firms"
+			]
+		},
+		"Aquarius": {
+			"element": "Air",
+			"modality": "Fixed",
+			"decision_style": "Unconventional, future-oriented, principle-driven. Decides based on innovation and social impact. Danger: contrarian for its own sake. Ignores proven models out of rebellion.",
+			"money_pattern": "Earns through innovation and network effects. Values freedom over wealth. Can be indifferent to money until it's gone. Wealth through technology and social systems.",
+			"risk_profile": "High for innovative risks. Comfortable with unproven technology and new paradigms. Avoids conventional risks that feel boring. Risk as expression of vision.",
+			"leadership": "Democratic, innovative, detached. Leads through ideas and systems. Can seem aloof. Teams attracted to the vision but may feel emotionally unsupported.",
+			"blind_spots": "Emotional detachment, impracticality, rebellion without purpose, difficulty with intimacy in business relationships, stubbornness about unconventional approaches.",
+			"scaling": "Scales through technology and network effects. Builds systems that scale without personal involvement. Struggles with people-intensive scaling. Growth through innovation.",
+			"revenue_affinity": [
+				"Technology startups",
+				"Social platforms",
+				"Innovation consulting",
+				"Humanitarian tech",
+				"Decentralized systems",
+				"Community organizing"
+			]
+		},
+		"Pisces": {
+			"element": "Water",
+			"modality": "Mutable",
+			"decision_style": "Intuitive, empathetic, sometimes escapist. Absorbs information from environment and decides through feeling. Remarkably accurate when centered. Danger: avoidance and fantasy-based decisions.",
+			"money_pattern": "Earns through creativity, healing, and emotional connection. Struggles with financial boundaries. Money flows when in creative alignment. Can be taken advantage of financially.",
+			"risk_profile": "Variable. High intuitive risk tolerance when centered, very low when overwhelmed. Avoids conflict-heavy risks. Takes creative risks naturally. Financial risk tolerance requires external structure.",
+			"leadership": "Empathetic, visionary, adaptive. Leads through emotional attunement and creative vision. Can be avoidant under pressure. Teams feel deeply understood but may lack clear direction.",
+			"blind_spots": "Escapism under pressure, boundary issues, absorbing others' stress, difficulty saying no, addiction vulnerability, fantasy vs reality confusion, avoidance of confrontation.",
+			"scaling": "Scales through emotional resonance and creative output. Audience growth through authentic connection. Struggles with operational scaling and business structure. Needs grounded operational partner.",
+			"revenue_affinity": [
+				"Creative arts",
+				"Healing/wellness",
+				"Spiritual services",
+				"Content creation",
+				"Music/film",
+				"Charitable ventures",
+				"Intuitive consulting"
+			]
+		}
+	},
+
+	"chinese_zodiac": {
+		"animals": {
+			"Rat": {
+				"business_energy": "Resourceful, shrewd, opportunity-spotter. First to see and seize advantages. Quick financial mind.",
+				"decision_style": "Quick, opportunistic, socially informed. Networks for information advantage.",
+				"risk_style": "Calculated risks with escape routes planned. Never all-in. Hedges naturally.",
+				"scaling": "Scales through networks and partnerships. Builds alliances. Quick to pivot."
+			},
+			"Ox": {
+				"business_energy": "Persistent, reliable, steady builder. Unmatched work ethic. Slow but unstoppable progress.",
+				"decision_style": "Methodical, tradition-respecting, careful. Decides through experience and precedent.",
+				"risk_style": "Very low. Conservative. Prefers proven paths. Risk tolerance only with extensive preparation.",
+				"scaling": "Slow, permanent scaling. Builds infrastructure that lasts. Compound growth champion."
+			},
+			"Tiger": {
+				"business_energy": "Bold, competitive, commanding. Natural authority. Takes charge in any environment.",
+				"decision_style": "Confident, sometimes reckless. Trusts personal judgment above all. Decisive.",
+				"risk_style": "High. Fearless when committed. Can overestimate personal ability to control outcomes.",
+				"scaling": "Rapid scaling through force of personality. Needs strong team to maintain what Tiger builds."
+			},
+			"Rabbit": {
+				"business_energy": "Diplomatic, aesthetic, refined. Succeeds through taste, timing, and social grace.",
+				"decision_style": "Cautious, socially aware, avoids confrontation. Decides through consensus.",
+				"risk_style": "Low. Avoids unnecessary exposure. Takes risks only in familiar territory with social safety net.",
+				"scaling": "Scales through elegance and brand quality. Word-of-mouth growth. Avoids aggressive marketing."
+			},
+			"Dragon": {
+				"business_energy": "Ambitious, visionary, magnetic. Largest energy in the zodiac. Commands attention and resources naturally.",
+				"decision_style": "Grand, confident, sometimes grandiose. Decides based on biggest possible outcome.",
+				"risk_style": "Very high. Believes in own luck and destiny. Can take enormous risks and often succeeds through sheer force of will.",
+				"scaling": "Born to scale. Thinks big from day one. Danger: over-expansion and ego-driven growth."
+			},
+			"Snake": {
+				"business_energy": "Strategic, intuitive, patient. Waits for perfect moment to strike. Deep thinker.",
+				"decision_style": "Slow, calculated, information-driven. Keeps plans secret until execution.",
+				"risk_style": "Moderate. Patient, strategic risks. Prefers to wait for asymmetric opportunities. Never rushes.",
+				"scaling": "Scales through strategic positioning and timing. Deep rather than wide. Quality over quantity."
+			},
+			"Horse": {
+				"business_energy": "Energetic, independent, fast-moving. Covers more ground than any other sign. Natural competitor.",
+				"decision_style": "Fast, independent, action-oriented. Decides by moving and adjusting. Impatient with slow processes.",
+				"risk_style": "High. Thrives on adrenaline of risk. Speed-oriented risk-taking. Danger: boredom-driven impulsive bets.",
+				"scaling": "Sprint-based scaling. Rapid bursts followed by plateaus. Needs systems to maintain gains during rest periods."
+			},
+			"Goat": {
+				"business_energy": "Creative, gentle, team-dependent. Produces beautiful work with right support. Needs security.",
+				"decision_style": "Collaborative, aesthetically guided, indecisive alone. Needs partner input.",
+				"risk_style": "Low. Strongly security-oriented. Takes risks only within safety of team or partnership.",
+				"scaling": "Scales through creative excellence and team synergy. Struggles independently. Growth through collaboration."
+			},
+			"Monkey": {
+				"business_energy": "Clever, innovative, problem-solver. Finds unconventional solutions. Quick learner in any field.",
+				"decision_style": "Playful, experimental, quick. Tests and iterates. Makes decisions through experimentation.",
+				"risk_style": "Moderate to high. Intellectual risks. Comfortable with uncertainty because they trust their ability to figure it out.",
+				"scaling": "Scales through innovation and clever systems. Can hack growth. Danger: outsmarting simple solutions."
+			},
+			"Rooster": {
+				"business_energy": "Precise, organized, critical-eye. Excellence-driven. Spot flaws instantly.",
+				"decision_style": "Detail-oriented, research-based, critical. Decides after thorough examination.",
+				"risk_style": "Low. Conservative. Manages risk through preparation and organization. Controls every variable possible.",
+				"scaling": "Scales through operational excellence and quality control. Efficient systems builder. Struggles with creative scaling."
+			},
+			"Dog": {
+				"business_energy": "Loyal, principled, protective. Values-driven business operator. Strong sense of right and wrong.",
+				"decision_style": "Values-first, protective, cautious. Decides based on trust and principle.",
+				"risk_style": "Low to moderate. Takes risks to protect or serve. Avoids risks that violate principles.",
+				"scaling": "Scales through loyalty and trust. Builds devoted teams and customer bases. Slow but deeply rooted growth."
+			},
+			"Pig": {
+				"business_energy": "Generous, hardworking, indulgent. Creates abundance through genuine effort and goodwill.",
+				"decision_style": "Optimistic, trusting, sometimes naive. Decides based on good faith and generosity.",
+				"risk_style": "Moderate. Trusting nature can lead to being taken advantage of. Risk tolerance increases with experience.",
+				"scaling": "Scales through generosity and hard work. Builds through genuine value creation. Danger: over-giving."
+			}
+		},
+		"elements": {
+			"Wood": {
+				"modifier": "Growth-oriented, expansive, collaborative. Adds flexibility and compassion to the animal energy.",
+				"business_impact": "Long-term vision, team building, organic growth strategies. Patient expansion."
+			},
+			"Fire": {
+				"modifier": "Dynamic, passionate, visible. Adds intensity and charisma to the animal energy.",
+				"business_impact": "High-energy execution, marketing flair, leadership presence. Burnout risk."
+			},
+			"Earth": {
+				"modifier": "Grounded, stable, methodical. Adds patience and practicality to the animal energy.",
+				"business_impact": "Operational excellence, steady growth, resource management. Risk of stagnation."
+			},
+			"Metal": {
+				"modifier": "Precise, determined, structured. Adds discipline and ambition to the animal energy.",
+				"business_impact": "Strategic focus, financial acumen, quality standards. Can be rigid and cold."
+			},
+			"Water": {
+				"modifier": "Intuitive, adaptive, deep. Adds emotional intelligence and flexibility to the animal energy.",
+				"business_impact": "Relationship building, adaptive strategy, emotional marketing. Can be indecisive."
+			}
+		}
+	},
+
+	"combination_rules": {
+		"_description": "Rules for blending signals across the 5 systems into cohesive chapter narratives. The generation prompt should follow these rules to create consistent, non-contradictory interpretations.",
+
+		"priority_hierarchy": {
+			"decision_making": [
+				"life_path",
+				"western_zodiac",
+				"chinese_animal",
+				"birthday_number",
+				"expression"
+			],
+			"wealth_building": [
+				"expression",
+				"life_path",
+				"chinese_element",
+				"western_zodiac",
+				"birthday_number"
+			],
+			"risk_tolerance": [
+				"chinese_animal",
+				"life_path",
+				"western_zodiac",
+				"expression",
+				"birthday_number"
+			],
+			"leadership_energy": [
+				"expression",
+				"western_zodiac",
+				"life_path",
+				"chinese_animal",
+				"birthday_number"
+			],
+			"scaling_strength": [
+				"expression",
+				"life_path",
+				"chinese_animal",
+				"western_zodiac",
+				"birthday_number"
+			],
+			"emotional_blind_spots": [
+				"western_zodiac",
+				"life_path",
+				"chinese_animal",
+				"expression",
+				"birthday_number"
+			],
+			"ideal_revenue_models": [
+				"life_path",
+				"expression",
+				"birthday_number",
+				"western_zodiac",
+				"chinese_animal"
+			]
+		},
+
+		"blending_method": "For each chapter, retrieve the trait description from each system in priority order. The highest-priority system sets the DOMINANT TONE. Lower-priority systems MODIFY, AMPLIFY, or TENSION the dominant tone. When two systems agree, state the trait with high confidence. When they conflict, describe the internal tension as a dynamic the subject experiences — this is where the most personalized and resonant insights emerge.",
+
+		"tension_patterns": {
+			"speed_vs_depth": "When one system favors fast action (e.g., Horse, Aries, LP5) and another favors deep analysis (e.g., LP7, Virgo, Snake), describe the subject as someone who deliberates then acts suddenly. The tension is their signature — not a flaw.",
+			"security_vs_freedom": "When one system craves stability (e.g., Taurus, LP4, Ox) and another craves variety (e.g., LP5, Gemini, Horse), describe the internal pendulum. The subject oscillates between building and exploring.",
+			"solo_vs_collaborative": "When one system is fiercely independent (e.g., LP1, Aries, Tiger) and another needs partnership (e.g., LP2, Libra, Rabbit), describe the subject as a reluctant collaborator who leads best with a trusted #2.",
+			"spiritual_vs_material": "When one system is spiritually oriented (e.g., Pisces, LP7, LP9) and another is materially driven (e.g., LP8, Capricorn, Dragon), describe the subject as someone who builds empires but needs meaning to sustain motivation.",
+			"creative_vs_structural": "When one system is creative (e.g., LP3, Leo, Pisces) and another is structural (e.g., LP4, Virgo, Capricorn), describe the tension between artistic vision and operational discipline."
+		},
+
+		"amplification_patterns": {
+			"double_fire": "When multiple fire signals appear (fire zodiac + fire chinese element + LP1/3/5), the subject has exceptional energy but high burnout risk. Emphasize pacing and sustainability.",
+			"double_water": "When multiple water signals appear (water zodiac + water chinese element + LP2/7/9), the subject has exceptional intuition but decision paralysis. Emphasize trust in gut feelings.",
+			"double_earth": "When multiple earth signals appear (earth zodiac + earth chinese element + LP4/8), the subject has exceptional building capacity but rigidity risk. Emphasize flexibility.",
+			"master_number_presence": "When a master number appears in any position, treat it as an amplifier of the entire profile. The subject operates at higher frequency with correspondingly higher pressure."
+		}
+	},
+
+	"karmic_debt_business_impact": {
+		"13/4": "Early business failures are likely and NECESSARY. Each failure teaches a lesson the subject skipped in a past-life pattern. Success comes through embracing hard work and avoiding shortcuts. Business advice: expect the first 2-3 ventures to struggle. The 4th will work because by then the discipline is internalized.",
+		"14/5": "Addictive risk-taking patterns emerge in business. The subject may be drawn to speculative ventures, get-rich-quick schemes, or excessive leverage. Success comes through moderation. Business advice: set strict risk budgets and never exceed them. The discipline of restraint unlocks freedom.",
+		"16/7": "Ego-shattering business experiences are part of the path. The subject may face public failure, betrayal, or loss that destroys their self-image. These events are designed to rebuild from a deeper, more authentic foundation. Business advice: build businesses that don't depend on your reputation alone.",
+		"19/1": "Difficulty accepting help creates bottlenecks. The subject insists on doing everything alone, burning out repeatedly. Success comes through genuine collaboration. Business advice: your biggest growth will come from the partnership or hire that feels the most uncomfortable."
+	}
+}
