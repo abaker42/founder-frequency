@@ -1,6 +1,51 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* ── Tailwind v4 Theme ────────────────────────────────────────────────── */
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@theme {
+  /* Brand Colors */
+  --color-brand-gold: #D4A853;
+  --color-brand-gold-light: #E8C97A;
+  --color-brand-burgundy: #7C1D3E;
+  --color-brand-burgundy-dark: #5C1530;
+  --color-brand-burgundy-light: #A03055;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.8s ease both;
+  --animate-fade-in-up: fade-in-up 0.8s ease both;
+  --animate-fade-in-slow: fade-in 1.4s ease both;
+  --animate-decode: decode 0.6s ease both;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ── Keyframes ────────────────────────────────────────────────────────── */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes decode {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
 
 @layer base {
   html {
@@ -13,13 +58,8 @@
     color: #fff;
   }
 
-  /* Subtle scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
     background: rgba(212, 168, 83, 0.2);
     border-radius: 3px;
@@ -29,11 +69,11 @@
   }
 }
 
+/* ── Components ───────────────────────────────────────────────────────── */
+
 @layer components {
   /* Noise overlay for sections */
-  .noise-overlay {
-    position: relative;
-  }
+  .noise-overlay { position: relative; }
   .noise-overlay::before {
     content: '';
     position: absolute;
@@ -45,8 +85,9 @@
     opacity: 0.4;
   }
 
-  /* Frequency line decoration */
+  /* Gold frequency line divider */
   .freq-line {
+    height: 1px;
     background: linear-gradient(
       90deg,
       transparent 0%,
@@ -55,7 +96,6 @@
       rgba(212, 168, 83, 0.3) 80%,
       transparent 100%
     );
-    height: 1px;
   }
 
   /* Gold gradient text */
@@ -75,6 +115,8 @@
     border-color: rgba(212, 168, 83, 0.2);
   }
 }
+
+/* ── Utilities ────────────────────────────────────────────────────────── */
 
 @layer utilities {
   .delay-100 { animation-delay: 100ms; }
