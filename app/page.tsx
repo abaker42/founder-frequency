@@ -850,10 +850,10 @@ export default function Home() {
 								id='pricing-heading'
 								className='font-display text-3xl sm:text-4xl font-medium tracking-tight'
 							>
-								Choose your depth of business intelligence
+								Two static snapshots. One living system.
 							</h2>
 							<p className='text-zinc-500 mt-3 text-sm'>
-								Numerological pricing — every number means something.
+								The Report and Blueprint are maps — you own them forever. The Circle is a GPS that recalculates every month.
 							</p>
 						</div>
 
@@ -984,12 +984,16 @@ export default function Home() {
 								</button>
 							</article>
 
-							{/* ── Frequency Circle $11/mo ───────────────────────── */}
+							{/* ── Frequency Circle $11/mo ─────────────────── */}
 							<article
-								className='card-glow rounded-2xl border border-zinc-800/60 bg-zinc-900/30 p-8'
+								className='card-glow rounded-2xl border border-zinc-800/60 bg-zinc-900/30 p-8 relative'
 								aria-labelledby='tier-circle'
 							>
-								<p className='text-xs font-semibold tracking-[0.25em] uppercase text-zinc-400 mb-1'>
+								<div className='absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-zinc-800 text-zinc-300 text-[10px] font-bold tracking-widest uppercase rounded-full border border-zinc-700'>
+									Living System
+								</div>
+
+								<p className='text-xs font-semibold tracking-[0.25em] uppercase text-zinc-400 mb-1 mt-2'>
 									Frequency Circle
 								</p>
 								<div className='flex items-baseline gap-1 mb-1'>
@@ -1008,9 +1012,9 @@ export default function Home() {
 								<div className='freq-line mb-6' aria-hidden='true' />
 
 								<p className='text-sm text-zinc-300 mb-5 font-medium'>
-									Evolving intelligence.{" "}
+									Not a cheaper report.{' '}
 									<em className='text-brand-gold font-display'>
-										Your profile, alive.
+										A GPS that recalculates every month.
 									</em>
 								</p>
 
@@ -1019,12 +1023,13 @@ export default function Home() {
 									aria-label='Frequency Circle features'
 								>
 									{[
-										"Full Blueprint on signup ($88 value)",
-										"Monthly energy brief (2–3 pages)",
-										"Quarterly strategic update",
-										"Personal Month frequency analysis",
-										"Member community (coming soon)",
-										"Cancel anytime — no contracts",
+										'Frequency Dashboard — your profile, evolving',
+										'Month 1: Core 5-channel profile + quarter forecast',
+										'Monthly 2–3 page contextual intelligence briefs',
+										'New strategic depth unlocked each month',
+										'Quarterly forecast recalculated every cycle',
+										'Time-stamped to your Personal Month energy',
+										'Cancel anytime — content is tied to membership',
 									].map((f) => (
 										<li
 											key={f}
@@ -1045,9 +1050,8 @@ export default function Home() {
 						</div>
 
 						<p className='text-center text-zinc-600 text-xs mt-8'>
-							Already bought the Frequency Report? Upgrade to the Full Blueprint
-							for $55 — you only pay the difference.
-						</p>
+						Already have the Report? Upgrade to the Blueprint for $55 (pay the difference) — depth on a different axis. Or join the Circle for intelligence that never stops evolving.
+					</p>
 					</div>
 				</section>
 
