@@ -364,6 +364,34 @@
 				"Permission to say no to people who drain you.",
 				"Permission to put your business needs alongside others' needs."
 			]
+		},
+		"master_architect": {
+			"applies_to": "LP22, LP22 + Expr1, LP22 + Expr2, LP22 + Expr3, LP22 + Expr4, LP22 + Expr5, LP22 + Expr6, LP22 + Expr7, LP22 + Expr8, LP22 + Expr9, LP22 + Expr11, LP22 + Expr22, LP22 + Expr33",
+			"phase_1_focus": "Find the load-bearing wall. Days 1-30: your 22 frequency sees ten steps ahead simultaneously — that's the gift and the trap. This phase has one job: identify the single foundational system that everything else requires before it can exist. Not the exciting part. The structural part. Interview the people who will use what you're building. Map the dependency chain. Build nothing until you know what has to come first.",
+			"phase_1_avoid": "Building on top of an unbuilt foundation. LP22 founders routinely skip early infrastructure because the finished vision is so vivid it feels like it already exists. It doesn't. Steps 1 through 3 have to physically exist before step 10 can hold weight.",
+			"phase_2_focus": "Build the replicable unit. Days 31-60: institutions are made of cells, not individuals. Your goal this phase is to build the first cell — one team, one system, one offer that could be run by someone else without you present. Document everything as you build it. The documentation IS the institution in embryonic form.",
+			"phase_2_avoid": "Building all cells simultaneously. You can see the whole organism. Your 22 energy will want to assemble it all at once. Institutional scale requires a working prototype first — one cell that actually replicates before you build the next.",
+			"phase_3_focus": "Test institutional resilience. Days 61-90: systematically remove yourself from the core process for one week. Does it function? Where does it break? What you find is your exact build list for the next 90-day cycle. LP22 builds for permanence — this phase determines whether what you built is a business or a personal performance.",
+			"phase_3_avoid": "Mistaking your performance for system performance. If it only works because you're in it every day, you haven't built anything yet — you've created a job with extra steps. The goal is a machine that outlasts your direct involvement.",
+			"permission_slips": [
+				"Permission to build slowly and permanently instead of fast and fragile.",
+				"Permission to delegate before you feel ready — imperfect delegation is how institutions grow.",
+				"Permission to start smaller than your vision. The institution follows the prototype, not the other way around."
+			]
+		},
+		"master_teacher": {
+			"applies_to": "LP33, LP33 + Expr1, LP33 + Expr2, LP33 + Expr3, LP33 + Expr4, LP33 + Expr5, LP33 + Expr6, LP33 + Expr7, LP33 + Expr8, LP33 + Expr9, LP33 + Expr11, LP33 + Expr22, LP33 + Expr33",
+			"phase_1_focus": "Define the transformation, not the curriculum. Days 1-30: LP33 teaches transformation, not information — but most 33s default to building content libraries because that's what feels like teaching. Stop. Define the before and after with clinical precision: what does your student look like when they arrive, and what do they look like when they leave? Every offering decision for the next 90 days flows from this answer. Interview five people who represent your ideal student. Let them describe their own before and after.",
+			"phase_1_avoid": "Teaching what you know instead of what they need. The LP33 trap is expertise-led content — you go deep on what fascinates you, not what produces the transformation they came for. The distinction is subtle and the most expensive mistake this archetype makes.",
+			"phase_2_focus": "Build the minimum viable transformation. Days 31-60: one complete experience that delivers the before-to-after you defined. Not a library. Not a course suite. One thing, done completely, tested on real humans. The format — course, workshop, coaching container, product — matters far less than whether the transformation actually happens. Test it before you invest in production.",
+			"phase_2_avoid": "Over-producing before you've proven the transformation. LP33 energy is naturally drawn to craft and quality. You will want to build something beautiful before you've confirmed it works. Build something functional first. Beauty is phase three.",
+			"phase_3_focus": "Price and protect the work. Days 61-90: LP33 founders chronically underprice because service feels like it should be accessible and because charging premium for teaching carries an unconscious guilt. This phase requires two uncomfortable moves: raise your price to reflect the transformation's actual value to the recipient, and build intake criteria that filter for students who are genuinely ready. You cannot sustain service at scale on a model that depletes you.",
+			"phase_3_avoid": "Giving away the core transformation for free or at discount. LP33 justifies this as generosity. It is actually a slow-motion sustainability crisis. Scholarship and generosity are legitimate — but they require a premium base to draw from. Build the premium tier first.",
+			"permission_slips": [
+				"Permission to charge what the transformation is worth, not what feels spiritually appropriate.",
+				"Permission to decline students who aren't ready — protecting your energy IS protecting your mission.",
+				"Permission to build a business around your teaching, not just a practice. Scale requires infrastructure."
+			]
 		}
 	},
 
