@@ -301,6 +301,7 @@ export default function Home() {
 	const [result, setResult] = useState<CalculatorResult | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+	const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
 	const calculatorRef = useRef<HTMLElement>(null);
 	const resultRef = useRef<HTMLDivElement>(null);
 
@@ -345,6 +346,31 @@ export default function Home() {
 			behavior: "smooth",
 			block: "center",
 		});
+	};
+
+	const handleCheckout = async (tier: "report" | "blueprint" | "circle") => {
+		if (!name.trim() || !dob.trim()) {
+			setError(
+				"Enter your name and date of birth above to continue to checkout.",
+			);
+			scrollToCalculator();
+			return;
+		}
+		setCheckoutLoading(tier);
+		try {
+			const res = await fetch("/api/checkout", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ tier, name: name.trim(), dob: dob.trim() }),
+			});
+			if (!res.ok) throw new Error((await res.json()).error);
+			const { url } = await res.json();
+			window.location.href = url;
+		} catch (err: any) {
+			setError(err.message || "Checkout failed. Please try again.");
+		} finally {
+			setCheckoutLoading(null);
+		}
 	};
 
 	return (
@@ -911,10 +937,12 @@ export default function Home() {
 								</ul>
 
 								<button
-									className='w-full py-3.5 rounded-lg border border-zinc-700 text-zinc-300 font-semibold text-sm tracking-wide uppercase hover:border-brand-gold/40 hover:text-brand-gold transition-all'
+									onClick={() => handleCheckout("report")}
+									disabled={!!checkoutLoading}
+									className='w-full py-3.5 rounded-lg border border-zinc-700 text-zinc-300 font-semibold text-sm tracking-wide uppercase hover:border-brand-gold/40 hover:text-brand-gold transition-all disabled:opacity-50 disabled:cursor-not-allowed'
 									aria-label='Purchase Frequency Report for $33'
 								>
-									Get Frequency Report
+									{checkoutLoading === "report" ? "Redirecting…" : "Get Frequency Report"}
 								</button>
 							</article>
 
@@ -977,10 +1005,12 @@ export default function Home() {
 								</ul>
 
 								<button
-									className='w-full py-3.5 rounded-lg bg-brand-gold text-zinc-950 font-semibold text-sm tracking-wide uppercase hover:bg-brand-gold-light transition-all shadow-lg shadow-brand-gold/10'
+									onClick={() => handleCheckout("blueprint")}
+									disabled={!!checkoutLoading}
+									className='w-full py-3.5 rounded-lg bg-brand-gold text-zinc-950 font-semibold text-sm tracking-wide uppercase hover:bg-brand-gold-light transition-all shadow-lg shadow-brand-gold/10 disabled:opacity-50 disabled:cursor-not-allowed'
 									aria-label='Purchase Full Frequency Blueprint for $88'
 								>
-									Get Full Blueprint
+									{checkoutLoading === "blueprint" ? "Redirecting…" : "Get Full Blueprint"}
 								</button>
 							</article>
 
@@ -1041,10 +1071,12 @@ export default function Home() {
 								</ul>
 
 								<button
-									className='w-full py-3.5 rounded-lg border border-zinc-700 text-zinc-300 font-semibold text-sm tracking-wide uppercase hover:border-brand-gold/40 hover:text-brand-gold transition-all'
+									onClick={() => handleCheckout("circle")}
+									disabled={!!checkoutLoading}
+									className='w-full py-3.5 rounded-lg border border-zinc-700 text-zinc-300 font-semibold text-sm tracking-wide uppercase hover:border-brand-gold/40 hover:text-brand-gold transition-all disabled:opacity-50 disabled:cursor-not-allowed'
 									aria-label='Subscribe to Frequency Circle for $11 per month'
 								>
-									Join the Circle
+									{checkoutLoading === "circle" ? "Redirecting…" : "Join the Circle"}
 								</button>
 							</article>
 						</div>
