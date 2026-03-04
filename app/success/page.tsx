@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 // useSearchParams() requires a Suspense boundary — SuccessContent is the
@@ -14,20 +14,14 @@ const TIER_LABELS: Record<string, string> = {
 	circle: "Frequency Circle",
 };
 
-// Map checkout tier → generate API tier
-const GENERATE_TIER: Record<string, "insight" | "blueprint"> = {
-	report: "insight",
-	blueprint: "blueprint",
-	circle: "blueprint", // Circle members get Blueprint-depth content
-};
-
 // ── Main Page ────────────────────────────────────────────────────────────────
 
-type Phase = "verifying" | "generating" | "done" | "error";
+type Phase = "verifying" | "confirmed" | "error";
 
 function SuccessContent() {
 	const params = useSearchParams();
 	const sessionId = params.get("session_id");
+	const hasRun = useRef(false);
 
 	const [phase, setPhase] = useState<Phase>("verifying");
 	const [error, setError] = useState("");
@@ -36,6 +30,9 @@ function SuccessContent() {
 	const [customerEmail, setCustomerEmail] = useState("");
 
 	useEffect(() => {
+		if (hasRun.current) return;
+		hasRun.current = true;
+
 		if (!sessionId) {
 			setError("No session found. If you completed payment, contact support.");
 			setPhase("error");
@@ -43,7 +40,6 @@ function SuccessContent() {
 		}
 
 		async function run() {
-			// 1. Verify payment
 			const verifyRes = await fetch(
 				`/api/verify-session?session_id=${sessionId}`,
 			);
@@ -54,30 +50,15 @@ function SuccessContent() {
 				return;
 			}
 
-			const { tier, name, dob, email } = await verifyRes.json();
+			const { tier, name, email } = await verifyRes.json();
 
 			setProfileName(name ?? "");
 			setTierLabel(TIER_LABELS[tier] ?? "Founder Frequency Report");
 			if (email) setCustomerEmail(email);
 
-			// 2. Generate report + send email
-			setPhase("generating");
-
-			const genTier = GENERATE_TIER[tier] ?? "insight";
-			const genRes = await fetch("/api/generate", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ name, dob, tier: genTier, email }),
-			});
-
-			if (!genRes.ok) {
-				const data = await genRes.json();
-				setError(data.error || "Report generation failed. Please contact support.");
-				setPhase("error");
-				return;
-			}
-
-			setPhase("done");
+			// Report generation is handled server-side via Stripe webhook → Inngest.
+			// Nothing to wait for here — the email is already on its way.
+			setPhase("confirmed");
 		}
 
 		run().catch((err) => {
@@ -123,37 +104,10 @@ function SuccessContent() {
 						</div>
 					)}
 
-					{/* ── Generating ──────────────────────────────────────── */}
-					{phase === "generating" && (
+					{/* ── Confirmed ───────────────────────────────────────── */}
+					{phase === "confirmed" && (
 						<div className='py-24'>
-							<div
-								className='w-3 h-3 rounded-full bg-brand-gold animate-pulse-glow mx-auto mb-10'
-								aria-hidden='true'
-							/>
-							<h2 className='font-display text-2xl font-medium tracking-tight text-zinc-100 mb-4'>
-								{firstName
-									? `Your report is on its way, ${firstName}.`
-									: "Your report is on its way."}
-							</h2>
-							<p className='text-zinc-400 text-sm leading-relaxed mb-6'>
-								We&apos;re assembling your {tierLabel} now. You&apos;ll receive a PDF at{" "}
-								{customerEmail ? (
-									<span className='text-brand-gold'>{customerEmail}</span>
-								) : (
-									"the email you entered at checkout"
-								)}{" "}
-								within a few minutes.
-							</p>
-							<p className='text-zinc-600 text-xs'>
-								This page will update automatically when it&apos;s ready.
-							</p>
-						</div>
-					)}
-
-					{/* ── Done ────────────────────────────────────────────── */}
-					{phase === "done" && (
-						<div className='py-24'>
-							{/* Check mark */}
+							{/* Checkmark */}
 							<div className='w-12 h-12 rounded-full border border-brand-gold/40 flex items-center justify-center mx-auto mb-8'>
 								<svg
 									className='w-5 h-5 text-brand-gold'
@@ -172,20 +126,25 @@ function SuccessContent() {
 							</p>
 
 							<h1 className='font-display text-3xl font-medium tracking-tight mb-4'>
-								{firstName ? `Check your inbox, ${firstName}.` : "Check your inbox."}
+								{firstName ? `You're all set, ${firstName}.` : "You're all set."}
 							</h1>
 
 							<p className='text-zinc-400 text-sm leading-relaxed mb-2'>
-								Your {tierLabel} has been sent to
+								Your {tierLabel} is being assembled and will arrive at
 							</p>
 							{customerEmail && (
 								<p className='text-brand-gold font-medium mb-8'>
 									{customerEmail}
 								</p>
 							)}
+							{!customerEmail && (
+								<p className='text-zinc-400 text-sm mb-8'>
+									the email you entered at checkout
+								</p>
+							)}
 
 							<p className='text-zinc-600 text-xs mb-12'>
-								Don&apos;t see it? Check your spam folder or reply to your receipt email.
+								Expect it within a few minutes. Check your spam folder if it doesn&apos;t appear.
 							</p>
 
 							<a

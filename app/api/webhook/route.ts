@@ -17,6 +17,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { inngest } from "@/lib/inngest";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -52,28 +53,38 @@ export async function POST(req: NextRequest) {
 	if (event.type === "checkout.session.completed") {
 		const session = event.data.object as Stripe.Checkout.Session;
 		const { tier, name, dob } = session.metadata ?? {};
+		const email = session.customer_details?.email ?? null;
 
 		console.log(`[Stripe] checkout.session.completed`, {
 			sessionId: session.id,
 			mode: session.mode,
 			tier,
 			name,
-			customerEmail: session.customer_details?.email,
+			email,
 		});
 
-		if (session.mode === "subscription") {
-			// Circle member — log for future monthly brief generation
-			console.log(`[Stripe] New Circle member subscribed`, {
-				customerId: session.customer,
-				subscriptionId: session.subscription,
-				name,
-				dob,
-			});
-			// TODO: Store customer + profile data in DB for monthly brief generation
-		}
+		// Trigger background report generation via Inngest.
+		// Inngest runs the Claude → PDF → email pipeline asynchronously —
+		// no browser connection needed, no 300 s timeout risk from the webhook itself.
+		if (name && dob && tier && email) {
+			const genTier: "insight" | "blueprint" =
+				tier === "blueprint" || tier === "circle" ? "blueprint" : "insight";
 
-		// Report generation happens client-side on the success page via verify-session.
-		// If adding email delivery, trigger it here with session.customer_details?.email.
+			await inngest.send({
+				name: "report/generate",
+				data: {
+					name,
+					dob,
+					tier: genTier,
+					email,
+					sessionId: session.id,
+				},
+			});
+
+			console.log(`[Inngest] report/generate event sent`, { tier: genTier, name, email });
+		} else {
+			console.warn(`[Stripe] Missing metadata — skipping generation`, { name, dob, tier, email });
+		}
 	}
 
 	if (event.type === "invoice.payment_succeeded") {

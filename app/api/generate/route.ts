@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
 		// The SDK sets a 600-second timeout and handles retries properly.
 		const client = new Anthropic({
 			apiKey: process.env.ANTHROPIC_API_KEY,
-			timeout: 290 * 1000, // 290 seconds — just under our maxDuration
+			// SDK default is 600 s — no explicit cap so we can measure actual generation time
 		});
 
 		const message = await client.messages.create({
