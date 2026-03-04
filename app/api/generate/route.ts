@@ -2,7 +2,8 @@
  * POST /api/generate
  *
  * Paid report generation endpoint. Called after Stripe payment confirmation.
- * Assembles the tier-appropriate prompt, calls the Claude API, generates a
+ * Assembles the tier-appropriate prompt, calls the Claude API via the official
+ * Anthropic SDK (which handles long-running requests correctly), generates a
  * branded PDF, and emails it to the customer via Resend.
  *
  * Body: { name: string, dob: string, tier: 'insight' | 'blueprint', email?: string }
@@ -13,6 +14,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import Anthropic from "@anthropic-ai/sdk";
 import {
 	assembleInsightPrompt,
 	assembleBlueprintPrompt,
@@ -20,19 +22,18 @@ import {
 } from "@/lib/assembler";
 import { sendReportEmail } from "@/lib/email";
 
-// Allow up to 5 minutes — Claude Blueprint generation takes 60–90 s.
-// Requires Vercel Pro (hobby plan caps at 60 s).
+// Allow up to 5 minutes on Vercel Pro (hobby plan caps at 60 s).
 export const maxDuration = 300;
 
 // Model selection per tier
 const TIER_CONFIG = {
 	insight: {
-		model: "claude-sonnet-4-6",
+		model: "claude-sonnet-4-6" as const,
 		max_tokens: 8000,
 		temperature: 0.7,
 	},
 	blueprint: {
-		model: "claude-sonnet-4-6",
+		model: "claude-sonnet-4-6" as const,
 		max_tokens: 16000,
 		temperature: 0.7,
 	},
@@ -57,8 +58,7 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		const apiKey = process.env.ANTHROPIC_API_KEY;
-		if (!apiKey) {
+		if (!process.env.ANTHROPIC_API_KEY) {
 			return NextResponse.json(
 				{ error: "Server configuration error: API key not set." },
 				{ status: 500 },
@@ -73,37 +73,26 @@ export async function POST(req: NextRequest) {
 
 		const config = TIER_CONFIG[tier as keyof typeof TIER_CONFIG];
 
-		// ── Call Claude API ────────────────────────────────────────────
-		const response = await fetch("https://api.anthropic.com/v1/messages", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"x-api-key": apiKey,
-				"anthropic-version": "2023-06-01",
-			},
-			body: JSON.stringify({
-				model: config.model,
-				max_tokens: config.max_tokens,
-				temperature: config.temperature,
-				messages: [{ role: "user", content: prompt }],
-			}),
+		// ── Call Claude via SDK (handles long timeouts correctly) ──────
+		// Raw fetch uses Node's undici with a 30-second headersTimeout, which
+		// kills requests before Claude finishes generating large reports.
+		// The SDK sets a 600-second timeout and handles retries properly.
+		const client = new Anthropic({
+			apiKey: process.env.ANTHROPIC_API_KEY,
+			timeout: 290 * 1000, // 290 seconds — just under our maxDuration
 		});
 
-		if (!response.ok) {
-			const errorBody = await response.text();
-			console.error("Claude API error:", response.status, errorBody);
-			return NextResponse.json(
-				{ error: "Report generation failed. Please try again." },
-				{ status: 502 },
-			);
-		}
+		const message = await client.messages.create({
+			model: config.model,
+			max_tokens: config.max_tokens,
+			temperature: config.temperature,
+			messages: [{ role: "user", content: prompt }],
+		});
 
-		const data = await response.json();
-		const reportText =
-			data.content
-				?.filter((block: any) => block.type === "text")
-				.map((block: any) => block.text)
-				.join("\n") ?? "";
+		const reportText = message.content
+			.filter((block) => block.type === "text")
+			.map((block) => (block as { type: "text"; text: string }).text)
+			.join("\n");
 
 		// ── Generate PDF + send email ──────────────────────────────────
 		let emailSent = false;
@@ -117,12 +106,11 @@ export async function POST(req: NextRequest) {
 				});
 				emailSent = true;
 			} catch (emailErr) {
-				// Log but don't fail the whole request — the in-browser report still works
 				console.error("Email delivery failed:", emailErr);
 			}
 		}
 
-		// ── Return report + metadata ───────────────────────────────────
+		// ── Return ─────────────────────────────────────────────────────
 		const metadata = getMetadata(name, dob);
 
 		return NextResponse.json({
