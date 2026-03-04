@@ -120,6 +120,8 @@ function SuccessContent() {
 	const [profileName, setProfileName] = useState("");
 	const [tierLabel, setTierLabel] = useState("Founder Frequency Report");
 	const [report, setReport] = useState("");
+	const [emailSent, setEmailSent] = useState(false);
+	const [customerEmail, setCustomerEmail] = useState("");
 	const reportRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -141,10 +143,11 @@ function SuccessContent() {
 				return;
 			}
 
-			const { tier, name, dob } = await verifyRes.json();
+			const { tier, name, dob, email } = await verifyRes.json();
 
 			setProfileName(name ?? "");
 			setTierLabel(TIER_LABELS[tier] ?? "Founder Frequency Report");
+			if (email) setCustomerEmail(email);
 
 			// 2. Generate report
 			setPhase("generating");
@@ -153,7 +156,7 @@ function SuccessContent() {
 			const genRes = await fetch("/api/generate", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ name, dob, tier: genTier }),
+				body: JSON.stringify({ name, dob, tier: genTier, email }),
 			});
 
 			if (!genRes.ok) {
@@ -163,7 +166,8 @@ function SuccessContent() {
 				return;
 			}
 
-			const { report: reportText } = await genRes.json();
+			const { report: reportText, emailSent: sent } = await genRes.json();
+			if (sent) setEmailSent(true);
 			setReport(reportText);
 			setPhase("done");
 
@@ -276,9 +280,17 @@ function SuccessContent() {
 										? `${profileName.split(" ")[0]}, your report is ready.`
 										: "Your report is ready."}
 								</h1>
-								<p className='text-zinc-500 text-sm'>
-									Save it now — bookmark this page or download below.
-								</p>
+								{emailSent && customerEmail ? (
+									<p className='text-zinc-500 text-sm'>
+										PDF sent to{' '}
+										<span className='text-brand-gold'>{customerEmail}</span>
+										{' '}— also available below.
+									</p>
+								) : (
+									<p className='text-zinc-500 text-sm'>
+										Save it now — bookmark this page or download below.
+									</p>
+								)}
 
 								<div className='flex items-center justify-center gap-3 mt-6'>
 									<button

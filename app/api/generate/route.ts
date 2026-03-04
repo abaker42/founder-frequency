@@ -2,12 +2,14 @@
  * POST /api/generate
  *
  * Paid report generation endpoint. Called after Stripe payment confirmation.
- * Assembles the tier-appropriate prompt and calls the Claude API.
+ * Assembles the tier-appropriate prompt, calls the Claude API, generates a
+ * branded PDF, and emails it to the customer via Resend.
  *
- * Body: { name: string, dob: string, tier: 'insight' | 'blueprint' }
- * Returns: { report: string, metadata: object }
+ * Body: { name: string, dob: string, tier: 'insight' | 'blueprint', email?: string }
+ * Returns: { report: string, tier: string, emailSent: boolean, metadata: object }
  *
- * Requires: ANTHROPIC_API_KEY environment variable
+ * Requires: ANTHROPIC_API_KEY
+ * Optional: RESEND_API_KEY + RESEND_FROM_EMAIL (for email delivery)
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -16,16 +18,21 @@ import {
 	assembleBlueprintPrompt,
 	getMetadata,
 } from "@/lib/assembler";
+import { sendReportEmail } from "@/lib/email";
+
+// Allow up to 5 minutes — Claude Blueprint generation takes 60–90 s.
+// Requires Vercel Pro (hobby plan caps at 60 s).
+export const maxDuration = 300;
 
 // Model selection per tier
 const TIER_CONFIG = {
 	insight: {
-		model: "claude-sonnet-4-5-20250929",
+		model: "claude-sonnet-4-6",
 		max_tokens: 8000,
 		temperature: 0.7,
 	},
 	blueprint: {
-		model: "claude-opus-4-5-20250929",
+		model: "claude-opus-4-6",
 		max_tokens: 16000,
 		temperature: 0.7,
 	},
@@ -33,7 +40,7 @@ const TIER_CONFIG = {
 
 export async function POST(req: NextRequest) {
 	try {
-		const { name, dob, tier } = await req.json();
+		const { name, dob, tier, email } = await req.json();
 
 		// ── Validation ─────────────────────────────────────────────────
 		if (!name || !dob || !tier) {
@@ -98,12 +105,30 @@ export async function POST(req: NextRequest) {
 				.map((block: any) => block.text)
 				.join("\n") ?? "";
 
+		// ── Generate PDF + send email ──────────────────────────────────
+		let emailSent = false;
+		if (email && process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL) {
+			try {
+				await sendReportEmail({
+					email,
+					name,
+					tier: tier as "insight" | "blueprint",
+					report: reportText,
+				});
+				emailSent = true;
+			} catch (emailErr) {
+				// Log but don't fail the whole request — the in-browser report still works
+				console.error("Email delivery failed:", emailErr);
+			}
+		}
+
 		// ── Return report + metadata ───────────────────────────────────
 		const metadata = getMetadata(name, dob);
 
 		return NextResponse.json({
 			report: reportText,
 			tier,
+			emailSent,
 			metadata: {
 				...metadata,
 				model: config.model,
