@@ -551,9 +551,12 @@ export default function Home() {
 									autoComplete='name'
 									value={name}
 									onChange={(e) => setName(e.target.value)}
-									placeholder='Anthony Baker'
+									placeholder='James Alan Smith'
 									className='w-full px-4 py-3.5 bg-zinc-900/80 border border-zinc-800 rounded-lg text-zinc-100 font-body placeholder:text-zinc-600 focus:outline-none focus:border-brand-gold/50 focus:ring-1 focus:ring-brand-gold/20 transition-all'
 								/>
+								<p className='mt-1.5 text-xs text-zinc-600'>
+									As it appears on your birth certificate, including middle name(s).
+								</p>
 							</div>
 
 							<div>
