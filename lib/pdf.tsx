@@ -251,6 +251,48 @@ function isTableSeparator(line: string): boolean {
 
 // ── Block parser ──────────────────────────────────────────────────────────────
 
+const BLOCK_LINE_LIMIT = 15; // max lines to scan for a closing tag
+
+function collectTaggedBlock(
+	lines: string[],
+	startIdx: number,
+	openTag: string,
+	closeTag: string,
+): { content: string; nextIdx: number } {
+	const openLine = lines[startIdx].trim();
+	// Strip the opening tag and anything around it
+	let content = openLine.replace(new RegExp(`\\[${openTag}\\]`, "gi"), "").trim();
+
+	// Closing tag on the same line
+	if (content.toLowerCase().includes(closeTag.toLowerCase())) {
+		content = content.replace(new RegExp(`\\[\\/${openTag}\\]`, "gi"), "").trim();
+		return { content, nextIdx: startIdx + 1 };
+	}
+
+	// Look ahead — only proceed if closing tag exists within BLOCK_LINE_LIMIT lines
+	const searchWindow = lines.slice(startIdx + 1, startIdx + 1 + BLOCK_LINE_LIMIT);
+	const closeRelIdx = searchWindow.findIndex((l) =>
+		l.toLowerCase().includes(closeTag.toLowerCase()),
+	);
+
+	if (closeRelIdx === -1) {
+		// No closing tag found — treat opening line content as the full block
+		return { content, nextIdx: startIdx + 1 };
+	}
+
+	// Collect lines up to (not including) the closing tag line
+	let j = startIdx + 1;
+	const closeAbsIdx = startIdx + 1 + closeRelIdx;
+	while (j < closeAbsIdx) {
+		const part = lines[j].trim();
+		if (part) content += (content ? " " : "") + part;
+		j++;
+	}
+
+	// j now points at the closing tag line — skip it
+	return { content, nextIdx: j + 1 };
+}
+
 function parseBlocks(text: string): Block[] {
 	const blocks: Block[] = [];
 	const lines = text.split("\n");
@@ -261,41 +303,18 @@ function parseBlocks(text: string): Block[] {
 		const trimmed = raw.trim();
 
 		// ── [CALLOUT] block ──────────────────────────────────────────────────
-		if (trimmed.includes("[CALLOUT]")) {
-			let content = trimmed.replace("[CALLOUT]", "").trim();
-			if (content.includes("[/CALLOUT]")) {
-				// Single line: [CALLOUT] text [/CALLOUT]
-				content = content.replace("[/CALLOUT]", "").trim();
-			} else {
-				// Multi-line: collect until [/CALLOUT]
-				i++;
-				while (i < lines.length && !lines[i].includes("[/CALLOUT]")) {
-					const part = lines[i].trim();
-					if (part) content += (content ? " " : "") + part;
-					i++;
-				}
-				// i now points at the [/CALLOUT] line — skip it
-			}
+		if (trimmed.toUpperCase().includes("[CALLOUT]")) {
+			const { content, nextIdx } = collectTaggedBlock(lines, i, "CALLOUT", "/CALLOUT");
 			if (content) blocks.push({ type: "callout", text: stripBold(content) });
-			i++;
+			i = nextIdx;
 			continue;
 		}
 
 		// ── [INSIGHT] block ──────────────────────────────────────────────────
-		if (trimmed.includes("[INSIGHT]")) {
-			let content = trimmed.replace("[INSIGHT]", "").trim();
-			if (content.includes("[/INSIGHT]")) {
-				content = content.replace("[/INSIGHT]", "").trim();
-			} else {
-				i++;
-				while (i < lines.length && !lines[i].includes("[/INSIGHT]")) {
-					const part = lines[i].trim();
-					if (part) content += (content ? " " : "") + part;
-					i++;
-				}
-			}
+		if (trimmed.toUpperCase().includes("[INSIGHT]")) {
+			const { content, nextIdx } = collectTaggedBlock(lines, i, "INSIGHT", "/INSIGHT");
 			if (content) blocks.push({ type: "insight", text: stripBold(content) });
-			i++;
+			i = nextIdx;
 			continue;
 		}
 
@@ -328,11 +347,11 @@ function parseBlocks(text: string): Block[] {
 
 		// ── Standard line types ──────────────────────────────────────────────
 		if (trimmed.startsWith("# ")) {
-			blocks.push({ type: "h1", text: stripBold(trimmed.slice(2)) });
+			blocks.push({ type: "h1", text: stripBold(trimmed.slice(2)).replace(/\[PREMIUM\]/gi, "").trim() });
 		} else if (trimmed.startsWith("## ")) {
-			blocks.push({ type: "h2", text: stripBold(trimmed.slice(3)) });
+			blocks.push({ type: "h2", text: stripBold(trimmed.slice(3)).replace(/\[PREMIUM\]/gi, "").trim() });
 		} else if (trimmed.startsWith("### ")) {
-			blocks.push({ type: "h3", text: stripBold(trimmed.slice(4)) });
+			blocks.push({ type: "h3", text: stripBold(trimmed.slice(4)).replace(/\[PREMIUM\]/gi, "").trim() });
 		} else if (trimmed.startsWith("---") || trimmed.startsWith("___")) {
 			blocks.push({ type: "divider" });
 		} else if (trimmed === "") {
