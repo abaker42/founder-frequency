@@ -88,12 +88,12 @@ function SuccessContent() {
 				</div>
 			</header>
 
-			<main className='pt-24 pb-24 px-6'>
+			<main className='pt-20 pb-16 sm:pt-24 sm:pb-24 px-5 sm:px-6'>
 				<div className='max-w-md mx-auto text-center'>
 
 					{/* ── Verifying ───────────────────────────────────────── */}
 					{phase === "verifying" && (
-						<div className='py-24'>
+						<div className='py-16 sm:py-24'>
 							<div
 								className='w-3 h-3 rounded-full bg-brand-gold animate-pulse-glow mx-auto mb-8'
 								aria-hidden='true'
@@ -106,7 +106,7 @@ function SuccessContent() {
 
 					{/* ── Confirmed ───────────────────────────────────────── */}
 					{phase === "confirmed" && (
-						<div className='py-24'>
+						<div className='py-16 sm:py-24'>
 							{/* Checkmark */}
 							<div className='w-12 h-12 rounded-full border border-brand-gold/40 flex items-center justify-center mx-auto mb-8'>
 								<svg
@@ -125,7 +125,7 @@ function SuccessContent() {
 								{tierLabel}
 							</p>
 
-							<h1 className='font-display text-3xl font-medium tracking-tight mb-4'>
+							<h1 className='font-display text-2xl sm:text-3xl font-medium tracking-tight mb-4'>
 								{firstName ? `You're all set, ${firstName}.` : "You're all set."}
 							</h1>
 
@@ -158,7 +158,7 @@ function SuccessContent() {
 
 					{/* ── Error ───────────────────────────────────────────── */}
 					{phase === "error" && (
-						<div className='py-24'>
+						<div className='py-16 sm:py-24'>
 							<p className='font-display text-2xl font-medium tracking-tight mb-4 text-zinc-200'>
 								Something went wrong
 							</p>

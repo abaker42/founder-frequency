@@ -107,6 +107,96 @@ const styles = StyleSheet.create({
 	blank: {
 		height: 4,
 	},
+	// ── Table ─────────────────────────────────────────────────────────────────
+	tableWrapper: {
+		marginTop: 14,
+		marginBottom: 18,
+		borderWidth: 1,
+		borderColor: RULE,
+	},
+	tableHeaderRow: {
+		flexDirection: "row",
+		backgroundColor: "#f4f4f5",
+		borderBottomWidth: 1,
+		borderBottomColor: RULE,
+	},
+	tableHeaderCell: {
+		flex: 1,
+		paddingVertical: 6,
+		paddingHorizontal: 7,
+		borderRightWidth: 1,
+		borderRightColor: RULE,
+	},
+	tableHeaderText: {
+		fontSize: 8,
+		fontFamily: "Helvetica-Bold",
+		color: DARK,
+	},
+	tableRow: {
+		flexDirection: "row",
+		borderBottomWidth: 1,
+		borderBottomColor: RULE,
+	},
+	tableRowAlt: {
+		backgroundColor: "#fafafa",
+	},
+	tableCell: {
+		flex: 1,
+		paddingVertical: 5,
+		paddingHorizontal: 7,
+		borderRightWidth: 1,
+		borderRightColor: RULE,
+	},
+	tableCellText: {
+		fontSize: 9,
+		color: MID,
+		lineHeight: 1.5,
+	},
+	// ── Callout box ───────────────────────────────────────────────────────────
+	calloutBox: {
+		marginTop: 14,
+		marginBottom: 14,
+		paddingVertical: 11,
+		paddingHorizontal: 13,
+		borderLeftWidth: 3,
+		borderLeftColor: GOLD,
+		backgroundColor: "#fffdf5",
+	},
+	calloutLabel: {
+		fontSize: 7,
+		fontFamily: "Helvetica-Bold",
+		color: GOLD,
+		letterSpacing: 2,
+		marginBottom: 5,
+	},
+	calloutText: {
+		fontSize: 10,
+		fontFamily: "Helvetica-Bold",
+		color: DARK,
+		lineHeight: 1.65,
+	},
+	// ── Insight box ───────────────────────────────────────────────────────────
+	insightBox: {
+		marginTop: 14,
+		marginBottom: 14,
+		paddingVertical: 11,
+		paddingHorizontal: 13,
+		borderLeftWidth: 3,
+		borderLeftColor: BURGUNDY,
+		backgroundColor: "#fff5f7",
+	},
+	insightLabel: {
+		fontSize: 7,
+		fontFamily: "Helvetica-Bold",
+		color: BURGUNDY,
+		letterSpacing: 2,
+		marginBottom: 5,
+	},
+	insightText: {
+		fontSize: 10,
+		color: DARK,
+		lineHeight: 1.65,
+	},
 	// Footer (fixed — appears on every page)
 	footer: {
 		position: "absolute",
@@ -129,7 +219,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-// ── Block parser ─────────────────────────────────────────────────────────────
+// ── Block types ───────────────────────────────────────────────────────────────
 
 type Block =
 	| { type: "h1"; text: string }
@@ -137,27 +227,123 @@ type Block =
 	| { type: "h3"; text: string }
 	| { type: "divider" }
 	| { type: "paragraph"; text: string }
-	| { type: "blank" };
+	| { type: "blank" }
+	| { type: "table"; headers: string[]; rows: string[][] }
+	| { type: "callout"; text: string }
+	| { type: "insight"; text: string };
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function stripBold(s: string): string {
+	return s.replace(/\*\*([^*]+)\*\*/g, "$1").trim();
+}
+
+function parseTableLine(line: string): string[] {
+	return line
+		.split("|")
+		.map((c) => c.trim())
+		.filter((c) => c.length > 0);
+}
+
+function isTableSeparator(line: string): boolean {
+	return /^\|[\s|:-]+\|$/.test(line.trim());
+}
+
+// ── Block parser ──────────────────────────────────────────────────────────────
 
 function parseBlocks(text: string): Block[] {
 	const blocks: Block[] = [];
-	for (const line of text.split("\n")) {
-		if (line.startsWith("# ")) {
-			blocks.push({ type: "h1", text: line.slice(2).trim() });
-		} else if (line.startsWith("## ")) {
-			blocks.push({ type: "h2", text: line.slice(3).trim() });
-		} else if (line.startsWith("### ")) {
-			blocks.push({ type: "h3", text: line.slice(4).trim() });
-		} else if (line.startsWith("---") || line.startsWith("___")) {
+	const lines = text.split("\n");
+	let i = 0;
+
+	while (i < lines.length) {
+		const raw = lines[i];
+		const trimmed = raw.trim();
+
+		// ── [CALLOUT] block ──────────────────────────────────────────────────
+		if (trimmed.includes("[CALLOUT]")) {
+			let content = trimmed.replace("[CALLOUT]", "").trim();
+			if (content.includes("[/CALLOUT]")) {
+				// Single line: [CALLOUT] text [/CALLOUT]
+				content = content.replace("[/CALLOUT]", "").trim();
+			} else {
+				// Multi-line: collect until [/CALLOUT]
+				i++;
+				while (i < lines.length && !lines[i].includes("[/CALLOUT]")) {
+					const part = lines[i].trim();
+					if (part) content += (content ? " " : "") + part;
+					i++;
+				}
+				// i now points at the [/CALLOUT] line — skip it
+			}
+			if (content) blocks.push({ type: "callout", text: stripBold(content) });
+			i++;
+			continue;
+		}
+
+		// ── [INSIGHT] block ──────────────────────────────────────────────────
+		if (trimmed.includes("[INSIGHT]")) {
+			let content = trimmed.replace("[INSIGHT]", "").trim();
+			if (content.includes("[/INSIGHT]")) {
+				content = content.replace("[/INSIGHT]", "").trim();
+			} else {
+				i++;
+				while (i < lines.length && !lines[i].includes("[/INSIGHT]")) {
+					const part = lines[i].trim();
+					if (part) content += (content ? " " : "") + part;
+					i++;
+				}
+			}
+			if (content) blocks.push({ type: "insight", text: stripBold(content) });
+			i++;
+			continue;
+		}
+
+		// ── Markdown table ───────────────────────────────────────────────────
+		if (trimmed.startsWith("|") && trimmed.endsWith("|")) {
+			const tableLines: string[] = [];
+			while (i < lines.length) {
+				const tl = lines[i].trim();
+				if (tl.startsWith("|") && tl.endsWith("|")) {
+					tableLines.push(tl);
+					i++;
+				} else {
+					break;
+				}
+			}
+			if (tableLines.length >= 2) {
+				const headers = parseTableLine(tableLines[0]);
+				// tableLines[1] is the separator — skip it
+				const dataLines = tableLines.slice(2).filter((l) => !isTableSeparator(l));
+				const rows = dataLines.map((l) => {
+					const cells = parseTableLine(l);
+					// Pad or trim to match header count
+					while (cells.length < headers.length) cells.push("");
+					return cells.slice(0, headers.length);
+				});
+				blocks.push({ type: "table", headers, rows });
+			}
+			continue;
+		}
+
+		// ── Standard line types ──────────────────────────────────────────────
+		if (trimmed.startsWith("# ")) {
+			blocks.push({ type: "h1", text: stripBold(trimmed.slice(2)) });
+		} else if (trimmed.startsWith("## ")) {
+			blocks.push({ type: "h2", text: stripBold(trimmed.slice(3)) });
+		} else if (trimmed.startsWith("### ")) {
+			blocks.push({ type: "h3", text: stripBold(trimmed.slice(4)) });
+		} else if (trimmed.startsWith("---") || trimmed.startsWith("___")) {
 			blocks.push({ type: "divider" });
-		} else if (line.trim() === "") {
+		} else if (trimmed === "") {
 			blocks.push({ type: "blank" });
 		} else {
-			// Strip **bold** markers — PDF Text doesn't support inline bold mixing easily
-			const cleaned = line.replace(/\*\*([^*]+)\*\*/g, "$1");
-			blocks.push({ type: "paragraph", text: cleaned });
+			blocks.push({ type: "paragraph", text: stripBold(trimmed) });
 		}
+
+		i++;
 	}
+
 	return blocks;
 }
 
@@ -241,6 +427,53 @@ export function FounderFrequencyPDF({
 									{block.text}
 								</Text>
 							);
+
+						case "table":
+							return (
+								<View key={i} style={styles.tableWrapper}>
+									{/* Header row */}
+									<View style={styles.tableHeaderRow}>
+										{block.headers.map((h, j) => (
+											<View key={j} style={styles.tableHeaderCell}>
+												<Text style={styles.tableHeaderText}>{h}</Text>
+											</View>
+										))}
+									</View>
+									{/* Data rows */}
+									{block.rows.map((row, j) => (
+										<View
+											key={j}
+											style={[
+												styles.tableRow,
+												j % 2 !== 0 ? styles.tableRowAlt : {},
+											]}
+										>
+											{row.map((cell, k) => (
+												<View key={k} style={styles.tableCell}>
+													<Text style={styles.tableCellText}>{cell}</Text>
+												</View>
+											))}
+										</View>
+									))}
+								</View>
+							);
+
+						case "callout":
+							return (
+								<View key={i} style={styles.calloutBox}>
+									<Text style={styles.calloutLabel}>FREQUENCY CALLOUT</Text>
+									<Text style={styles.calloutText}>{block.text}</Text>
+								</View>
+							);
+
+						case "insight":
+							return (
+								<View key={i} style={styles.insightBox}>
+									<Text style={styles.insightLabel}>INSIGHT</Text>
+									<Text style={styles.insightText}>{block.text}</Text>
+								</View>
+							);
+
 						default:
 							return null;
 					}

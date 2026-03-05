@@ -711,6 +711,209 @@ Generate the complete Founder Frequency Blueprint for ${d.firstName}:
 </report_structure>`;
 }
 
+// ── Blueprint: Shared Context Builder ────────────────────────────────
+
+function buildBlueprintContextBlock(fullName: string, dob: string): {
+	header: string;
+	firstName: string;
+} {
+	const d = extractProfileData(fullName, dob, true);
+	const partnership = getPartnershipData(d.lpNum);
+	const actionPlan = getActionPlan(d.lpNum, d.exprNum, d.wSign, d.cAnimal);
+	const pyData = getPersonalYearData(d.profile.personal_year!.number);
+	const quarterly = getQuarterlyData(d.profile);
+	const currentYear = new Date().getFullYear();
+
+	const header = `<s>
+${SYSTEM_PROMPT_CORE}
+
+TIER-SPECIFIC RULES (FULL FREQUENCY BLUEPRINT — MULTI-PART GENERATION):
+- This is one part of a 4-part comprehensive frequency blueprint. Generate ONLY the sections listed in <report_structure>.
+- Each main chapter: 900-1200 words. Premium sections: 500-700 words.
+- Include [INSIGHT] boxes on every chapter — each containing a genuine "uncomfortable truth."
+- Include tables where specified in <report_structure>.
+- Use ${d.firstName}'s name throughout — at least 5 times per part.
+- Every chapter references at least 3 of the 5 frequency channels.
+- All detected frequency tensions must be described as dynamics throughout.
+- Do NOT include any upsell CTA — this is the top tier.
+- Do NOT add a closing or introduction for the overall report — only generate the requested sections.
+</s>
+
+<subject_profile>
+NAME: ${d.fullName}
+FIRST NAME: ${d.firstName}
+DATE OF BIRTH: ${d.dobDisplay}
+
+FREQUENCY CHANNELS:
+- Life Path Frequency: ${d.lpNum} — ${d.lpArchetype}
+- Birthday Imprint: ${d.bdDisplay} — ${d.bdTalent}
+- Expression Frequency: ${d.exprNum} — ${d.exprArchetype}
+- Soul Urge: ${d.suNum} | Personality: ${d.pnNum}
+- Western Zodiac: ${d.wDisplay} | ${d.wElem}, ${d.wMod}
+- Chinese Zodiac: ${d.cDisplay}
+${d.hasKarmic ? `- KARMIC DEBT: ${d.karmic} — ${d.karmicMatrix}` : ""}
+${d.hasMasters ? `- MASTER NUMBERS: ${d.masterPositions.join(", ")}` : ""}
+- Personal Year (${currentYear}): ${d.profile.personal_year!.number}
+- Personal Month: ${d.profile.personal_month!.number}
+</subject_profile>
+
+<frequency_data>
+=== LIFE PATH ${d.lpNum} ===
+${d.lpMatrix}
+
+=== BIRTHDAY ${d.bdDisplay} ===
+${d.bdMatrix}
+
+=== EXPRESSION ${d.exprNum} ===
+${d.exprMatrix}
+
+=== WESTERN: ${d.wSign} ===
+${d.westernMatrix}
+
+=== CHINESE: ${d.cAnimal} + ${d.cElem} ===
+${d.chineseMatrix}
+
+=== COMBINATION RULES ===
+PRIORITY HIERARCHY:
+${d.priorityText}
+
+ACTIVE FREQUENCY TENSIONS:
+${d.tensionDescriptions.length ? d.tensionDescriptions.join("\n") : "None — signals largely aligned."}
+
+FREQUENCY AMPLIFICATIONS:
+${d.ampDescriptions.length ? d.ampDescriptions.join("\n") : "None detected."}
+</frequency_data>
+
+<premium_data>
+=== PARTNERSHIP COMPATIBILITY (Life Path ${d.lpNum}) ===
+${partnership}
+
+=== 90-DAY ACTION PLAN ARCHETYPE ===
+${actionPlan}
+
+=== PERSONAL YEAR FORECAST ===
+${pyData}
+
+=== QUARTERLY FREQUENCY FORECAST (${currentYear}) ===
+${quarterly}
+</premium_data>`;
+
+	return { header, firstName: d.firstName };
+}
+
+// ── Blueprint Part Prompts ────────────────────────────────────────────
+
+export function assembleBlueprintPart1Prompt(fullName: string, dob: string): string {
+	const { header, firstName } = buildBlueprintContextBlock(fullName, dob);
+	return `${header}
+
+<report_structure>
+Generate PART 1 of the Founder Frequency Blueprint for ${firstName}. Include ONLY these sections:
+
+## EXECUTIVE PROFILE SYNTHESIS (~500 words)
+- Full unified frequency profile — all 5 channels woven together
+- What makes this specific frequency combination rare or noteworthy
+- Central tension in their founder frequency
+- [CALLOUT] Your Core Frequency [/CALLOUT]
+
+## CHAPTER 1: Decision-Making Frequency (~1,000 words)
+- 3-4 sub-sections: primary loop, override pattern, speed modifier, talent layer
+- All active frequency tensions described as dynamics
+- [CALLOUT] Your Decision Frequency in Practice [/CALLOUT]
+- [INSIGHT] The decision pattern they can't see [/INSIGHT]
+
+## CHAPTER 2: Wealth Frequency (~1,000 words)
+- 3-4 sub-sections: money frequency, earning style, communication multiplier, wealth type
+- [CALLOUT] Your Wealth Frequency [/CALLOUT]
+- [INSIGHT] The financial belief costing them money [/INSIGHT]
+</report_structure>`;
+}
+
+export function assembleBlueprintPart2Prompt(fullName: string, dob: string): string {
+	const { header, firstName } = buildBlueprintContextBlock(fullName, dob);
+	return `${header}
+
+<report_structure>
+Generate PART 2 of the Founder Frequency Blueprint for ${firstName}. Include ONLY these sections:
+
+## CHAPTER 3: Risk Tolerance Profile (~1,200 words)
+- 3-4 sub-sections: dual frequency channels, collision points, triggers, speculative vs. strategic
+- FULL Risk Matrix Table: 6-8 scenarios | Tolerance | Driver
+- [CALLOUT] Your Risk Frequency — The Real Answer [/CALLOUT]
+- [INSIGHT] The risk behavior they rationalize [/INSIGHT]
+
+## CHAPTER 4: Leadership Frequency (~1,000 words)
+- 3-4 sub-sections: default mode, command mode, delegation patterns, team culture
+- [CALLOUT] Your Leadership Frequency [/CALLOUT]
+- [INSIGHT] The leadership weakness they call a strength [/INSIGHT]
+</report_structure>`;
+}
+
+export function assembleBlueprintPart3Prompt(fullName: string, dob: string): string {
+	const { header, firstName } = buildBlueprintContextBlock(fullName, dob);
+	return `${header}
+
+<report_structure>
+Generate PART 3 of the Founder Frequency Blueprint for ${firstName}. Include ONLY these sections:
+
+## CHAPTER 5: Scaling Frequency (~1,000 words)
+- 3-4 sub-sections: scaling pattern, growth stage strength, plateau causes, partner needs
+- Scaling Tendencies Table: 5-7 patterns | Impact
+- [CALLOUT] Your Scaling Rule [/CALLOUT]
+- [INSIGHT] The scaling behavior that feels productive but stalls growth [/INSIGHT]
+
+## CHAPTER 6: Emotional Blind Spots (~1,000 words)
+- 4 named blind spots: most expensive, relationship, stress response, self-perception
+- Each tied to specific frequency channels
+- [CALLOUT] The Uncomfortable Truth — the meta-blind-spot [/CALLOUT]
+- [INSIGHT] What they need externally to compensate [/INSIGHT]
+
+## CHAPTER 7: Revenue Model Alignment (~1,000 words)
+- Tier 1 Highest (2-3 models, detailed), Tier 2 Strong (2-3), Tier 3 Caution (2-3)
+- Revenue Model Alignment Table: model | tier | driver
+- [CALLOUT] Your Revenue Frequency Filter — 3 questions [/CALLOUT]
+- [INSIGHT] The model they're attracted to but shouldn't lead with [/INSIGHT]
+</report_structure>`;
+}
+
+export function assembleBlueprintPart4Prompt(fullName: string, dob: string): string {
+	const { header, firstName } = buildBlueprintContextBlock(fullName, dob);
+	return `${header}
+
+<report_structure>
+Generate PART 4 (final) of the Founder Frequency Blueprint for ${firstName}. Include ONLY these sections:
+
+## CHAPTER 8: Your Burnout Frequency (~700 words) [PREMIUM]
+- 5-phase cycle: Trigger → Escalation → Break → Recovery → Re-entry
+- Specific to their frequency combination, not generic
+- [CALLOUT] Burnout Prevention Protocol — 3 actions [/CALLOUT]
+
+## CHAPTER 9: Partnership Compatibility Matrix (~700 words) [PREMIUM]
+- Use the partnership data provided to describe ideal frequency matches for: Co-founder, Operations #2, Creative collaborator, Investor, Mentor
+- Include a summary table: Role | Ideal Type | Why | Red Flag Type
+- [CALLOUT] Your Ideal #2 [/CALLOUT]
+
+## CHAPTER 10: 90-Day Strategic Action Plan (~600 words) [PREMIUM]
+- Use the action plan archetype data provided
+- Phase 1 (Days 1-30): Foundation — specific focus + avoid
+- Phase 2 (Days 31-60): Build — specific focus + avoid
+- Phase 3 (Days 61-90): Launch — specific focus + avoid
+- Include the 3 permission slips
+- [CALLOUT] Your Non-Negotiable for the Next 90 Days [/CALLOUT]
+
+## CHAPTER 11: Quarterly Frequency Forecast (~500 words) [PREMIUM]
+- Use the quarterly data provided
+- Map each quarter to a frequency theme + specific business action
+- Name the Power Quarter — when to make biggest moves
+- [CALLOUT] Your Power Quarter [/CALLOUT]
+
+## CLOSING: Final Word (~300 words)
+- Deep, personal, direct
+- Central challenge and central capacity
+- No upsell CTA — this is the top tier
+</report_structure>`;
+}
+
 // ── Master Assembler ─────────────────────────────────────────────────
 
 export function assemble(

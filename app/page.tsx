@@ -268,7 +268,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 					aria-expanded={open}
 					aria-controls={`faq-${id}`}
 				>
-					<span className='font-body text-zinc-200 font-medium pr-8 group-hover:text-brand-gold-light transition-colors'>
+					<span className='font-body text-zinc-200 font-medium pr-4 sm:pr-8 group-hover:text-brand-gold-light transition-colors'>
 						{question}
 					</span>
 					<span
@@ -421,16 +421,16 @@ export default function Home() {
 			<main id='main'>
 				{/* ── Hero ────────────────────────────────────────────── */}
 				<section
-					className='relative pt-32 pb-16 px-6 noise-overlay overflow-hidden'
+					className='relative pt-20 pb-12 sm:pt-32 sm:pb-16 px-6 noise-overlay overflow-hidden'
 					aria-labelledby='hero-heading'
 				>
 					{/* Background ambient glows */}
 					<div
-						className='absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-burgundy/10 rounded-full blur-[120px] pointer-events-none'
+						className='absolute top-1/4 left-1/2 -translate-x-1/2 w-[200px] h-[150px] sm:w-[400px] sm:h-[280px] md:w-[600px] md:h-[400px] bg-brand-burgundy/10 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none'
 						aria-hidden='true'
 					/>
 					<div
-						className='absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-brand-gold/5 rounded-full blur-[100px] pointer-events-none'
+						className='absolute top-1/3 left-1/3 w-[150px] h-[150px] sm:w-[220px] sm:h-[220px] md:w-[300px] md:h-[300px] bg-brand-gold/5 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none'
 						aria-hidden='true'
 					/>
 
@@ -441,7 +441,7 @@ export default function Home() {
 
 						<h1
 							id='hero-heading'
-							className='opacity-0 animate-fade-in-up delay-100 font-display text-5xl sm:text-6xl md:text-7xl font-medium leading-[1.1] tracking-tight mb-8'
+							className='opacity-0 animate-fade-in-up delay-100 font-display text-4xl sm:text-6xl md:text-7xl font-medium leading-[1.1] tracking-tight mb-8'
 						>
 							Your business decisions
 							<br />
@@ -460,10 +460,10 @@ export default function Home() {
 							decoded from your name and birthday.
 						</p>
 
-						<div className='opacity-0 animate-fade-in-up delay-500 flex flex-col sm:flex-row items-center justify-center gap-4'>
+						<div className='opacity-0 animate-fade-in-up delay-500 flex flex-col items-center justify-center gap-4'>
 							<button
 								onClick={scrollToCalculator}
-								className='px-8 py-4 bg-brand-gold text-zinc-950 font-body font-semibold rounded-lg hover:bg-brand-gold-light transition-all duration-300 shadow-lg shadow-brand-gold/10 hover:shadow-brand-gold/25 text-sm tracking-wide uppercase'
+								className='w-full sm:w-auto px-8 py-4 bg-brand-gold text-zinc-950 font-body font-semibold rounded-lg hover:bg-brand-gold-light transition-all duration-300 shadow-lg shadow-brand-gold/10 hover:shadow-brand-gold/25 text-sm tracking-wide uppercase'
 							>
 								Free Founder Frequency Scan
 							</button>
@@ -486,7 +486,7 @@ export default function Home() {
 					className='border-y border-zinc-800/50 bg-zinc-950/50'
 					aria-label='Key facts'
 				>
-					<div className='max-w-5xl mx-auto px-6 py-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-xs tracking-widest uppercase text-zinc-500'>
+					<div className='max-w-5xl mx-auto px-6 py-6 flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-10 gap-y-3 text-xs tracking-widest uppercase text-zinc-500'>
 						<span>5 Profiling Systems</span>
 						<span className='text-brand-gold/40' aria-hidden='true'>
 							◆
@@ -507,7 +507,7 @@ export default function Home() {
 				<section
 					ref={calculatorRef}
 					id='calculator'
-					className='relative py-24 px-6'
+					className='relative py-14 sm:py-24 px-6'
 					aria-labelledby='calc-heading'
 				>
 					<div
@@ -516,7 +516,7 @@ export default function Home() {
 					/>
 
 					<div className='max-w-xl mx-auto relative z-10'>
-						<div className='text-center mb-12'>
+						<div className='text-center mb-8 sm:mb-12'>
 							<p className='text-xs font-semibold tracking-[0.3em] uppercase text-brand-gold mb-3'>
 								Free Founder Personality Calculator
 							</p>
@@ -862,7 +862,7 @@ export default function Home() {
 				{/* ── Pricing ─────────────────────────────────────────────── */}
 				<section
 					id='pricing'
-					className='relative py-24 px-6'
+					className='relative py-14 sm:py-24 px-6'
 					aria-labelledby='pricing-heading'
 				>
 					<div
@@ -889,7 +889,7 @@ export default function Home() {
 						<div className='grid md:grid-cols-3 gap-6 items-start'>
 							{/* ── Frequency Report $33 ──────────────────────────── */}
 							<article
-								className='card-glow rounded-2xl border border-zinc-800/60 bg-zinc-900/30 p-8'
+								className='card-glow rounded-2xl border border-zinc-800/60 bg-zinc-900/30 p-6 sm:p-8'
 								aria-labelledby='tier-insight'
 							>
 								<p className='text-xs font-semibold tracking-[0.25em] uppercase text-zinc-400 mb-1'>
@@ -951,7 +951,7 @@ export default function Home() {
 
 							{/* ── Full Blueprint $88 (featured) ────────────────── */}
 							<article
-								className='card-glow rounded-2xl border border-brand-gold/30 bg-zinc-900/50 p-8 relative shadow-lg shadow-brand-gold/5 md:-mt-4'
+								className='card-glow rounded-2xl border border-brand-gold/30 bg-zinc-900/50 p-6 sm:p-8 relative shadow-lg shadow-brand-gold/5 md:-mt-4 mt-6 md:mt-0'
 								aria-labelledby='tier-blueprint'
 							>
 								<div className='absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-brand-gold text-zinc-950 text-[10px] font-bold tracking-widest uppercase rounded-full'>
@@ -1019,7 +1019,7 @@ export default function Home() {
 
 							{/* ── Frequency Circle $11/mo ─────────────────── */}
 							<article
-								className='card-glow rounded-2xl border border-zinc-800/60 bg-zinc-900/30 p-8 relative'
+								className='card-glow rounded-2xl border border-zinc-800/60 bg-zinc-900/30 p-6 sm:p-8 relative mt-6 md:mt-0'
 								aria-labelledby='tier-circle'
 							>
 								<div className='absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-zinc-800 text-zinc-300 text-[10px] font-bold tracking-widest uppercase rounded-full border border-zinc-700'>
@@ -1139,9 +1139,9 @@ export default function Home() {
 				<Divider />
 
 				{/* ── Final CTA ───────────────────────────────────────────── */}
-				<section className='py-24 px-6 relative' aria-labelledby='cta-heading'>
+				<section className='py-14 sm:py-24 px-6 relative' aria-labelledby='cta-heading'>
 					<div
-						className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-brand-gold/5 rounded-full blur-[100px] pointer-events-none'
+						className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[150px] sm:w-[500px] sm:h-[300px] bg-brand-gold/5 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none'
 						aria-hidden='true'
 					/>
 

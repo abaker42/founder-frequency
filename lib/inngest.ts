@@ -7,15 +7,26 @@
  * Runs entirely server-side: Claude → PDF → Resend email.
  * No browser connection required — customer sees instant confirmation.
  *
- * Step breakdown:
- *   generate-with-claude  (~218 s for Blueprint at 12,000 tokens)
- *   send-email            (~5 s)
- *   Total                 ~223 s — fits within Vercel Pro's 300 s maxDuration.
+ * Blueprint step breakdown (4 parallel Claude calls):
+ *   Part 1: Exec Profile + Ch 1-2  (~4,000 tokens, ~65s)
+ *   Part 2: Ch 3-4                 (~3,500 tokens, ~55s)
+ *   Part 3: Ch 5-7                 (~4,500 tokens, ~75s)  ← longest
+ *   Part 4: Ch 8-11 + Closing      (~4,500 tokens, ~75s)
+ *   All parts run in parallel — total wall time ~75s.
+ *
+ * Insight step breakdown (single call):
+ *   generate-with-claude           (~8,000 tokens, ~145s)
  */
 
 import { Inngest } from "inngest";
 import Anthropic from "@anthropic-ai/sdk";
-import { assembleInsightPrompt, assembleBlueprintPrompt } from "./assembler";
+import {
+	assembleInsightPrompt,
+	assembleBlueprintPart1Prompt,
+	assembleBlueprintPart2Prompt,
+	assembleBlueprintPart3Prompt,
+	assembleBlueprintPart4Prompt,
+} from "./assembler";
 import { sendReportEmail } from "./email";
 
 // ── Client ───────────────────────────────────────────────────────────────────
@@ -24,18 +35,21 @@ export const inngest = new Inngest({
 	id: "founder-frequency",
 });
 
-// ── Tier config ───────────────────────────────────────────────────────────────
+// ── Claude helper ─────────────────────────────────────────────────────────────
 
-const TIER_CONFIG = {
-	insight: {
-		model: "claude-sonnet-4-6" as const,
-		max_tokens: 8000,   // ~145 s
-	},
-	blueprint: {
-		model: "claude-sonnet-4-6" as const,
-		max_tokens: 12000,  // ~218 s — within Vercel Pro 300 s maxDuration
-	},
-} as const;
+async function callClaude(prompt: string, maxTokens: number): Promise<string> {
+	const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+	const message = await client.messages.create({
+		model: "claude-sonnet-4-6",
+		max_tokens: maxTokens,
+		temperature: 0.7,
+		messages: [{ role: "user", content: prompt }],
+	});
+	return message.content
+		.filter((b) => b.type === "text")
+		.map((b) => (b as { type: "text"; text: string }).text)
+		.join("\n");
+}
 
 // ── Event type ────────────────────────────────────────────────────────────────
 
@@ -60,32 +74,36 @@ export const generateReportFn = inngest.createFunction(
 	{ event: "report/generate" },
 	async ({ event, step }) => {
 		const { name, dob, email } = event.data;
-		const tier = event.data.tier as keyof typeof TIER_CONFIG;
+		const tier = event.data.tier as "insight" | "blueprint";
 
-		// Step 1: Generate report text via Claude
-		const reportText = await step.run("generate-with-claude", async () => {
-			const prompt =
-				tier === "insight"
-					? assembleInsightPrompt(name, dob)
-					: assembleBlueprintPrompt(name, dob);
+		let reportText: string;
 
-			const config = TIER_CONFIG[tier];
-			const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+		if (tier === "insight") {
+			// Single step — 8,000 tokens (~145s, fits in 300s window)
+			reportText = await step.run("generate-with-claude", () =>
+				callClaude(assembleInsightPrompt(name, dob), 8000),
+			);
+		} else {
+			// 4 parallel steps — each ~75s max, all within 300s window
+			const [part1, part2, part3, part4] = await Promise.all([
+				step.run("generate-part-1", () =>
+					callClaude(assembleBlueprintPart1Prompt(name, dob), 4000),
+				),
+				step.run("generate-part-2", () =>
+					callClaude(assembleBlueprintPart2Prompt(name, dob), 3500),
+				),
+				step.run("generate-part-3", () =>
+					callClaude(assembleBlueprintPart3Prompt(name, dob), 4500),
+				),
+				step.run("generate-part-4", () =>
+					callClaude(assembleBlueprintPart4Prompt(name, dob), 4500),
+				),
+			]);
 
-			const message = await client.messages.create({
-				model: config.model,
-				max_tokens: config.max_tokens,
-				temperature: 0.7,
-				messages: [{ role: "user", content: prompt }],
-			});
+			reportText = [part1, part2, part3, part4].join("\n\n");
+		}
 
-			return message.content
-				.filter((b) => b.type === "text")
-				.map((b) => (b as { type: "text"; text: string }).text)
-				.join("\n");
-		});
-
-		// Step 2: Generate PDF + send email
+		// Final step: generate PDF + send email
 		await step.run("send-email", async () => {
 			await sendReportEmail({ email, name, tier, report: reportText });
 		});
