@@ -59,8 +59,6 @@ export async function POST(req: NextRequest) {
 			sessionId: session.id,
 			mode: session.mode,
 			tier,
-			name,
-			email,
 		});
 
 		// Trigger background report generation via Inngest.
@@ -81,9 +79,9 @@ export async function POST(req: NextRequest) {
 				},
 			});
 
-			console.log(`[Inngest] report/generate event sent`, { tier: genTier, name, email });
+			console.log(`[Inngest] report/generate event sent`, { tier: genTier, sessionId: session.id });
 		} else {
-			console.warn(`[Stripe] Missing metadata — skipping generation`, { name, dob, tier, email });
+			console.warn(`[Stripe] Missing metadata — skipping generation`, { sessionId: session.id, tier, hasDob: !!dob, hasEmail: !!email });
 		}
 	}
 
