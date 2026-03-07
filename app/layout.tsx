@@ -120,6 +120,12 @@ export const metadata: Metadata = {
 	//   other: { 'msvalidate.01': 'your-bing-verification' },
 	// },
 
+	// ── Icons ────────────────────────────────────────────────────────
+	icons: {
+		icon: "/icon-192.png",
+		apple: "/icon-192.png",
+	},
+
 	// ── App / Manifest ───────────────────────────────────────────────
 	manifest: "/manifest.json",
 
