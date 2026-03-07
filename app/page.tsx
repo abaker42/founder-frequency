@@ -15,6 +15,16 @@ interface CalculatorResult {
 		western: string;
 		chinese: string;
 	};
+	archetype: {
+		name: string;
+		tagline: string;
+		description: string;
+		family: string;
+		element: string;
+		isDoubleElement: boolean;
+		tensionModifier: string | null;
+		amplificationModifier: string | null;
+	};
 	teaser: {
 		headline: string;
 		body: string;
@@ -631,12 +641,41 @@ export default function Home() {
 							>
 								<div className='text-center opacity-0 animate-fade-in-up'>
 									<p className='font-display text-2xl sm:text-3xl tracking-tight mb-2'>
-										{result.firstName}, your founder frequency is
+										{result.firstName}, you&apos;re
 									</p>
-									<p className='font-display text-4xl sm:text-5xl text-gradient-gold font-medium tracking-tight'>
-										{result.summary.life_path}–{result.summary.expression}–
-										{result.summary.western.split(" ")[0]}
+									<p className='font-display text-4xl sm:text-5xl text-gradient-gold font-medium tracking-tight mb-1'>
+										{result.archetype.name}
 									</p>
+									<p className='text-zinc-500 text-sm tracking-widest uppercase'>
+										frequency {result.summary.life_path}–{result.summary.expression}–{result.summary.western.split(" ")[0]}
+									</p>
+								</div>
+
+								{/* Archetype card */}
+								<div className='opacity-0 animate-fade-in-up delay-200 rounded-xl border border-brand-gold/20 bg-zinc-900/60 p-5 text-center'>
+									<p className='text-brand-gold text-xs font-semibold tracking-[0.25em] uppercase mb-2'>
+										Your Founder Archetype
+									</p>
+									<p className='text-zinc-200 text-sm leading-relaxed italic mb-3'>
+										&ldquo;{result.archetype.tagline}&rdquo;
+									</p>
+									<p className='text-zinc-400 text-sm leading-relaxed'>
+										{result.archetype.description}
+									</p>
+									{(result.archetype.tensionModifier || result.archetype.amplificationModifier) && (
+										<div className='mt-4 pt-4 border-t border-zinc-800 space-y-2 text-left'>
+											{result.archetype.amplificationModifier && (
+												<p className='text-xs text-brand-gold/80 leading-relaxed'>
+													⚡ {result.archetype.amplificationModifier}
+												</p>
+											)}
+											{result.archetype.tensionModifier && (
+												<p className='text-xs text-zinc-500 leading-relaxed'>
+													⚖ {result.archetype.tensionModifier}
+												</p>
+											)}
+										</div>
+									)}
 								</div>
 
 								{/* 5 frequency channels */}

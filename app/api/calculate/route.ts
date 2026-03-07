@@ -11,6 +11,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { calculateProfile } from "@/lib/calculator";
 import { detectTensions, detectAmplifications } from "@/lib/assembler";
+import { classifyArchetype } from "@/lib/archetypes";
 
 export async function POST(req: NextRequest) {
 	try {
@@ -26,6 +27,7 @@ export async function POST(req: NextRequest) {
 		const profile = calculateProfile(name, dob);
 		const tensions = detectTensions(profile);
 		const amplifications = detectAmplifications(profile);
+		const archetype = classifyArchetype(profile, tensions, amplifications);
 		const firstName = name.trim().split(/\s+/)[0];
 
 		// Build teaser — enough to hook, not enough to satisfy
@@ -42,8 +44,18 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({
 			firstName,
 			summary: profile.summary,
+			archetype: {
+				name: archetype.name,
+				tagline: archetype.tagline,
+				description: archetype.description,
+				family: archetype.family,
+				element: archetype.element,
+				isDoubleElement: archetype.isDoubleElement,
+				tensionModifier: archetype.tensionModifier,
+				amplificationModifier: archetype.amplificationModifier,
+			},
 			teaser: {
-				headline: `${firstName}, your founder frequency is ${profile.life_path.number}-${profile.expression.number}-${profile.western_zodiac.sign}`,
+				headline: `${firstName}, you're ${archetype.name} — your founder frequency is ${profile.life_path.number}-${profile.expression.number}-${profile.western_zodiac.sign}`,
 				body: tensionTeaser + masterTeaser,
 				tensionCount: tensions.length,
 				amplificationCount: amplifications.length,
