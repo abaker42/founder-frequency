@@ -312,6 +312,8 @@ export default function Home() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 	const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+	const [subscribeEmail, setSubscribeEmail] = useState("");
+	const [subscribePhase, setSubscribePhase] = useState<"idle" | "submitting" | "done" | "error">("idle");
 	const calculatorRef = useRef<HTMLElement>(null);
 	const resultRef = useRef<HTMLDivElement>(null);
 
@@ -651,7 +653,7 @@ export default function Home() {
 									</p>
 								</div>
 
-								{/* Archetype card */}
+								{/* ── BEAT 1: Archetype card (always visible, shareable) ── */}
 								<div className='opacity-0 animate-fade-in-up delay-200 rounded-xl border border-brand-gold/20 bg-zinc-900/60 p-5 text-center'>
 									<p className='text-brand-gold text-xs font-semibold tracking-[0.25em] uppercase mb-2'>
 										Your Founder Archetype
@@ -662,102 +664,158 @@ export default function Home() {
 									<p className='text-zinc-400 text-sm leading-relaxed'>
 										{result.archetype.description}
 									</p>
-									{(result.archetype.tensionModifier || result.archetype.amplificationModifier) && (
-										<div className='mt-4 pt-4 border-t border-zinc-800 space-y-2 text-left'>
-											{result.archetype.amplificationModifier && (
-												<p className='text-xs text-brand-gold/80 leading-relaxed'>
-													⚡ {result.archetype.amplificationModifier}
-												</p>
-											)}
-											{result.archetype.tensionModifier && (
-												<p className='text-xs text-zinc-500 leading-relaxed'>
-													⚖ {result.archetype.tensionModifier}
-												</p>
-											)}
-										</div>
-									)}
 								</div>
 
-								{/* 5 frequency channels */}
+								{/* ── BEAT 1: 5 frequency channels (always visible) ─────── */}
 								<div
-									className='space-y-2 mt-8'
+									className='space-y-2'
 									role='list'
 									aria-label='Your five frequency channels'
 								>
-									<ChannelBadge
-										label='Life Path Frequency'
-										value={result.summary.life_path}
-										delay={200}
-									/>
-									<ChannelBadge
-										label='Birthday Imprint'
-										value={result.summary.birthday}
-										delay={350}
-									/>
-									<ChannelBadge
-										label='Expression Frequency'
-										value={result.summary.expression}
-										delay={500}
-									/>
-									<ChannelBadge
-										label='Western Zodiac'
-										value={result.summary.western}
-										delay={650}
-									/>
-									<ChannelBadge
-										label='Chinese Zodiac'
-										value={result.summary.chinese}
-										delay={800}
-									/>
+									<ChannelBadge label='Life Path Frequency' value={result.summary.life_path} delay={200} />
+									<ChannelBadge label='Birthday Imprint' value={result.summary.birthday} delay={350} />
+									<ChannelBadge label='Expression Frequency' value={result.summary.expression} delay={500} />
+									<ChannelBadge label='Western Zodiac' value={result.summary.western} delay={650} />
+									<ChannelBadge label='Chinese Zodiac' value={result.summary.chinese} delay={800} />
 								</div>
 
-								{/* Special badges */}
-								{(result.teaser.hasMasterNumber ||
-									result.teaser.hasKarmicDebt ||
-									result.teaser.tensionCount > 0) && (
-									<div
-										className='flex flex-wrap justify-center gap-2 opacity-0 animate-fade-in delay-700 pt-2'
-										aria-label='Profile markers'
-									>
-										{result.teaser.hasMasterNumber && (
-											<span className='px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-brand-gold/10 text-brand-gold border border-brand-gold/20 rounded-full'>
-												Master Number Carrier
-											</span>
-										)}
-										{result.teaser.hasKarmicDebt && (
-											<span className='px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-brand-burgundy/20 text-brand-burgundy-light border border-brand-burgundy/30 rounded-full'>
-												Karmic Debt Detected
-											</span>
-										)}
-										{result.teaser.tensionCount > 0 && (
-											<span className='px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-zinc-800 text-zinc-300 border border-zinc-700 rounded-full'>
-												{result.teaser.tensionCount} Active Tension
-												{result.teaser.tensionCount > 1 ? "s" : ""}
-											</span>
-										)}
+								{/* ── BEAT 2: Curiosity gap + email gate ───────────────── */}
+								{subscribePhase !== "done" && (
+									<div className='rounded-xl border border-zinc-700/60 bg-zinc-900/40 overflow-hidden'>
+										{/* Blurred tension preview */}
+										<div className='px-5 pt-5 pb-4 border-b border-zinc-800'>
+											<p className='text-zinc-300 text-sm leading-relaxed'>
+												{result.teaser.tensionCount > 0
+													? `Your profile has ${result.teaser.tensionCount} active frequency tension${result.teaser.tensionCount > 1 ? "s" : ""} — patterns where your channels are working against each other. These are the most expensive blind spots in your business.`
+													: `Your frequency channels are aligned — a rare configuration. Beneath that alignment are specific amplification patterns shaping every decision you make.`
+												}
+											</p>
+										</div>
+										{/* Gate */}
+										<div className='px-5 py-4'>
+											<p className='text-xs font-semibold tracking-[0.2em] uppercase text-zinc-500 mb-1'>
+												🔒 Unlock your tension analysis
+											</p>
+											<p className='text-zinc-500 text-xs mb-3'>
+												Enter your email to reveal what these patterns are costing you — and where your real edge is hiding.
+											</p>
+											<form
+												onSubmit={async (e) => {
+													e.preventDefault();
+													if (!subscribeEmail) return;
+													setSubscribePhase("submitting");
+													try {
+														const res = await fetch("/api/subscribe", {
+															method: "POST",
+															headers: { "Content-Type": "application/json" },
+															body: JSON.stringify({
+																email: subscribeEmail,
+																firstName: result?.firstName,
+																archetypeName: result?.archetype.name,
+															}),
+														});
+														setSubscribePhase(res.ok ? "done" : "error");
+													} catch {
+														setSubscribePhase("error");
+													}
+												}}
+												className='flex flex-col sm:flex-row gap-2'
+											>
+												<input
+													type='email'
+													required
+													placeholder='your@email.com'
+													value={subscribeEmail}
+													onChange={(e) => setSubscribeEmail(e.target.value)}
+													className='flex-1 px-4 py-2.5 rounded-lg bg-zinc-950 border border-zinc-700 text-zinc-100 placeholder-zinc-600 text-sm focus:outline-none focus:border-brand-gold/50'
+												/>
+												<button
+													type='submit'
+													disabled={subscribePhase === "submitting"}
+													className='px-5 py-2.5 rounded-lg bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-sm font-medium hover:bg-brand-gold/20 transition-colors disabled:opacity-50 whitespace-nowrap'
+												>
+													{subscribePhase === "submitting" ? "Unlocking…" : "Reveal my analysis"}
+												</button>
+											</form>
+											{subscribePhase === "error" && (
+												<p className='text-xs text-red-400 mt-2'>
+													Something went wrong — please try again.
+												</p>
+											)}
+										</div>
 									</div>
 								)}
 
-								{/* Teaser paragraph */}
-								<div className='opacity-0 animate-fade-in-up delay-800 mt-6 p-5 rounded-xl bg-zinc-900/60 border border-zinc-800/60'>
-									<p className='text-zinc-300 text-sm leading-relaxed'>
-										{result.teaser.body}
-									</p>
-								</div>
+								{/* ── BEAT 3: Revealed after email ─────────────────────── */}
+								{subscribePhase === "done" && (
+									<>
+										{/* Tension + amplification analysis */}
+										{(result.archetype.tensionModifier || result.archetype.amplificationModifier) && (
+											<div className='rounded-xl border border-zinc-700/60 bg-zinc-900/40 p-5 space-y-4'>
+												<p className='text-xs font-semibold tracking-[0.2em] uppercase text-zinc-500'>
+													Your Frequency Analysis
+												</p>
+												{result.archetype.amplificationModifier && (
+													<div className='flex gap-3'>
+														<span className='text-brand-gold mt-0.5'>⚡</span>
+														<p className='text-sm text-zinc-300 leading-relaxed'>
+															{result.archetype.amplificationModifier}
+														</p>
+													</div>
+												)}
+												{result.archetype.tensionModifier && (
+													<div className='flex gap-3'>
+														<span className='text-zinc-500 mt-0.5'>⚖</span>
+														<p className='text-sm text-zinc-400 leading-relaxed'>
+															{result.archetype.tensionModifier}
+														</p>
+													</div>
+												)}
+											</div>
+										)}
 
-								{/* Upsell CTA */}
-								<div className='opacity-0 animate-fade-in-up delay-800 text-center pt-4'>
-									<p className='text-zinc-500 text-xs mb-4 tracking-wide'>
-										This is the surface. The full report goes 15–28 pages deep
-										into your business psychology.
-									</p>
-									<a
-										href='#pricing'
-										className='inline-flex items-center gap-2 px-8 py-4 bg-brand-gold text-zinc-950 font-semibold rounded-lg hover:bg-brand-gold-light transition-all duration-300 shadow-lg shadow-brand-gold/10 hover:shadow-brand-gold/25 text-sm tracking-wide uppercase'
-									>
-										Get Your Full Founder Report
-									</a>
-								</div>
+										{/* Special badges */}
+										{(result.teaser.hasMasterNumber || result.teaser.hasKarmicDebt || result.teaser.tensionCount > 0) && (
+											<div className='flex flex-wrap justify-center gap-2' aria-label='Profile markers'>
+												{result.teaser.hasMasterNumber && (
+													<span className='px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-brand-gold/10 text-brand-gold border border-brand-gold/20 rounded-full'>
+														Master Number Carrier
+													</span>
+												)}
+												{result.teaser.hasKarmicDebt && (
+													<span className='px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-brand-burgundy/20 text-brand-burgundy-light border border-brand-burgundy/30 rounded-full'>
+														Karmic Debt Detected
+													</span>
+												)}
+												{result.teaser.tensionCount > 0 && (
+													<span className='px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-zinc-800 text-zinc-300 border border-zinc-700 rounded-full'>
+														{result.teaser.tensionCount} Active Tension{result.teaser.tensionCount > 1 ? "s" : ""}
+													</span>
+												)}
+											</div>
+										)}
+
+										{/* Teaser body */}
+										<div className='p-5 rounded-xl bg-zinc-900/60 border border-zinc-800/60'>
+											<p className='text-zinc-300 text-sm leading-relaxed'>
+												{result.teaser.body}
+											</p>
+										</div>
+
+										{/* Upsell CTA */}
+										<div className='text-center pt-2'>
+											<p className='text-zinc-500 text-xs mb-4 tracking-wide'>
+												This is the surface. The full report goes 15–28 pages deep into your business psychology.
+											</p>
+											<a
+												href='#pricing'
+												className='inline-flex items-center gap-2 px-8 py-4 bg-brand-gold text-zinc-950 font-semibold rounded-lg hover:bg-brand-gold-light transition-all duration-300 shadow-lg shadow-brand-gold/10 hover:shadow-brand-gold/25 text-sm tracking-wide uppercase'
+											>
+												Get Your Full Founder Report
+											</a>
+										</div>
+									</>
+								)}
 							</div>
 						)}
 					</div>
