@@ -61,12 +61,21 @@ export async function POST(req: NextRequest) {
 			tier,
 		});
 
-		// Trigger background report generation via Inngest.
-		// Inngest runs the Claude → PDF → email pipeline asynchronously —
-		// no browser connection needed, no 300 s timeout risk from the webhook itself.
 		if (name && dob && tier && email) {
 			const genTier: "insight" | "blueprint" =
 				tier === "blueprint" || tier === "circle" ? "blueprint" : "insight";
+
+			// For Circle subscribers: store name + dob on the Stripe Customer so
+			// future invoice.payment_succeeded renewals can retrieve the profile.
+			if (tier === "circle" && session.customer) {
+				try {
+					await stripe.customers.update(session.customer as string, {
+						metadata: { name, dob },
+					});
+				} catch (err: any) {
+					console.error("[Stripe] Failed to store customer metadata:", err.message);
+				}
+			}
 
 			// For Report buyers: generate a customer-restricted $33-off promo code
 			// so they can upgrade to Blueprint for $55. The code is bound to their
@@ -113,13 +122,38 @@ export async function POST(req: NextRequest) {
 
 	if (event.type === "invoice.payment_succeeded") {
 		const invoice = event.data.object as Stripe.Invoice;
-		// Recurring Circle payment — generate monthly brief
-		// TODO: Look up subscriber profile from DB, generate brief, send via email
-		console.log(`[Stripe] Circle renewal payment`, {
-			customerId: invoice.customer,
-			invoiceId: invoice.id,
-			amount: invoice.amount_paid,
-		});
+
+		// Only handle subscription renewals — skip the initial payment which is
+		// already covered by checkout.session.completed.
+		if (invoice.billing_reason !== "subscription_cycle") {
+			return NextResponse.json({ received: true });
+		}
+
+		const customerId = invoice.customer as string;
+
+		try {
+			const customer = await stripe.customers.retrieve(customerId) as Stripe.Customer;
+			const { name, dob } = customer.metadata ?? {};
+			const email = customer.email;
+
+			if (name && dob && email) {
+				await inngest.send({
+					name: "brief/generate",
+					data: {
+						name,
+						dob,
+						email,
+						customerId,
+						invoiceId: invoice.id,
+					},
+				});
+				console.log(`[Inngest] brief/generate event sent`, { customerId, invoiceId: invoice.id });
+			} else {
+				console.warn(`[Stripe] Circle renewal missing profile data — skipping brief`, { customerId, invoiceId: invoice.id });
+			}
+		} catch (err: any) {
+			console.error("[Stripe] Failed to retrieve customer for brief generation:", err.message);
+		}
 	}
 
 	return NextResponse.json({ received: true });

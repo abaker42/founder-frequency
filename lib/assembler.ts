@@ -914,6 +914,107 @@ Generate PART 4 (final) of the Founder Frequency Blueprint for ${firstName}. Inc
 </report_structure>`;
 }
 
+// ── Monthly Brief Prompt (Circle subscription) ────────────────────────
+
+export function assembleMonthlyBriefPrompt(fullName: string, dob: string): string {
+	const d = extractProfileData(fullName, dob, true);
+	const now = new Date();
+	const currentYear = now.getFullYear();
+	const monthNames = [
+		"January","February","March","April","May","June",
+		"July","August","September","October","November","December",
+	];
+	const currentMonthName = monthNames[now.getMonth()];
+	const pyNum = d.profile.personal_year!.number;
+	const pmNum = d.profile.personal_month!.number;
+	const quarterly = getQuarterlyData(d.profile);
+	const pyData = getPersonalYearData(pyNum);
+
+	return `<s>
+${SYSTEM_PROMPT_CORE}
+
+TIER-SPECIFIC RULES (CIRCLE MONTHLY BRIEF):
+- This is a monthly dispatch, NOT a report recap. It is forward-looking and action-oriented.
+- Total length: 1,500-2,000 words. Punchy, high-signal, no filler.
+- Structure: Executive Signal → Month Theme → 3 Focus Windows → Decision Filter → One Risk → Monthly Directive.
+- Tone: like a trusted strategic advisor checking in at the start of the month — direct, specific, urgent where it matters.
+- Reference ${d.firstName} by name at least 10 times.
+- Every insight must tie to a specific frequency channel (name the number or sign).
+- End with exactly 3 concrete actions for this month. No vague advice.
+- Do NOT recap the full profile — subscribers already have their Blueprint. Reference channels only when driving a specific monthly point.
+</s>
+
+<subject_profile>
+NAME: ${d.fullName}
+FIRST NAME: ${d.firstName}
+DATE OF BIRTH: ${d.dobDisplay}
+CURRENT MONTH: ${currentMonthName} ${currentYear}
+
+FREQUENCY CHANNELS:
+- Life Path: ${d.lpNum} — ${d.lpArchetype}
+- Birthday Imprint: ${d.bdDisplay} — ${d.bdTalent}
+- Expression: ${d.exprNum} — ${d.exprArchetype}
+- Western Zodiac: ${d.wDisplay} | ${d.wElem}, ${d.wMod}
+- Chinese Zodiac: ${d.cDisplay}
+${d.hasKarmic ? `- KARMIC DEBT: ${d.karmic}` : ""}
+${d.hasMasters ? `- MASTER NUMBERS: ${d.masterPositions.join(", ")}` : ""}
+
+ACTIVE TENSIONS:
+${d.tensionDescriptions.length ? d.tensionDescriptions.join("\n") : "None — channels largely aligned."}
+
+ACTIVE AMPLIFICATIONS:
+${d.ampDescriptions.length ? d.ampDescriptions.join("\n") : "None detected."}
+</subject_profile>
+
+<frequency_data>
+=== PERSONAL YEAR ${pyNum} ===
+${pyData}
+
+=== QUARTERLY FREQUENCY FORECAST ===
+${quarterly}
+</frequency_data>
+
+<report_structure>
+Generate the ${currentMonthName} ${currentYear} Founder Frequency Brief for ${d.firstName}.
+This is Personal Month ${pmNum} inside Personal Year ${pyNum}.
+
+## EXECUTIVE SIGNAL (~150 words)
+- One paragraph. The single most important frequency truth for ${d.firstName} this month.
+- Name the Personal Month ${pmNum} energy and what it demands of a ${d.lpArchetype} archetype.
+- [CALLOUT] ${currentMonthName}'s Signal — one sharp sentence [/CALLOUT]
+
+## THIS MONTH'S FREQUENCY THEME (~300 words)
+- What Personal Month ${pmNum} energy activates and suppresses for ${d.firstName}'s specific combination.
+- How this month sits inside the Personal Year ${pyNum} arc — is this a push month, a build month, or a harvest month?
+- Name any frequency tension that is either amplified or eased by this month's energy.
+
+## 3 FOCUS WINDOWS (~500 words, ~165 words each)
+Three distinct areas where ${d.firstName}'s frequency is most active this month.
+Each window: name it, explain why this month, give one concrete business application.
+- Window 1: [most energetically charged area for PM${pmNum} + LP${d.lpNum}]
+- Window 2: [relationship/collaboration dynamic for this month]
+- Window 3: [financial or operational focus]
+
+## DECISION FILTER (~250 words)
+- One decision framework tuned to Personal Month ${pmNum} energy.
+- What kinds of decisions to accelerate vs. defer this month — specific to ${d.firstName}'s frequency.
+- One question ${d.firstName} should ask before committing to anything significant in ${currentMonthName}.
+- [CALLOUT] ${currentMonthName} Decision Rule [/CALLOUT]
+
+## ONE RISK (~200 words)
+- The single most likely frequency trap for ${d.firstName} this month.
+- Name the specific channels creating this risk.
+- One sentence on how to sidestep it.
+
+## ${currentMonthName.toUpperCase()} DIRECTIVES
+Exactly 3 concrete, specific actions for ${d.firstName} this month. No vague advice.
+Each directive: one bold headline + 2-sentence explanation tied to frequency data.
+1. **[Action Name]** — explanation
+2. **[Action Name]** — explanation
+3. **[Action Name]** — explanation
+</report_structure>`;
+}
+
 // ── Master Assembler ─────────────────────────────────────────────────
 
 export function assemble(

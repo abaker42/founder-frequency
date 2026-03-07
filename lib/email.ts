@@ -62,6 +62,53 @@ export async function sendReportEmail({
 	});
 }
 
+export interface SendBriefEmailOptions {
+	email: string;
+	name: string;
+	brief: string;
+	monthName: string;
+	year: number;
+}
+
+/**
+ * Generates a PDF and sends the monthly Circle brief via Resend.
+ */
+export async function sendBriefEmail({
+	email,
+	name,
+	brief,
+	monthName,
+	year,
+}: SendBriefEmailOptions): Promise<void> {
+	const resend = new Resend(process.env.RESEND_API_KEY);
+	const firstName = name.split(" ")[0];
+	const date = new Date().toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
+
+	const pdfBuffer = await generatePDFBuffer({
+		name,
+		tier: "brief",
+		report: brief,
+		generatedDate: `${monthName} ${year}`,
+	});
+
+	await resend.emails.send({
+		from: process.env.RESEND_FROM_EMAIL!,
+		to: email,
+		subject: `${firstName}, your ${monthName} ${year} frequency brief`,
+		html: buildBriefEmailHTML({ firstName, monthName, year, date }),
+		attachments: [
+			{
+				filename: `founder-frequency-${firstName.toLowerCase()}-${monthName.toLowerCase()}-${year}.pdf`,
+				content: pdfBuffer,
+			},
+		],
+	});
+}
+
 // ── Email HTML template ───────────────────────────────────────────────────────
 
 function buildEmailHTML({
@@ -180,6 +227,98 @@ function buildEmailHTML({
             <td style="background-color:#111113;border-top:1px solid #27272a;padding:18px 40px;">
               <p style="margin:0;font-size:11px;color:#52525b;text-align:center;">
                 &copy; ${year} Founder Frequency &nbsp;&middot;&nbsp;
+                <a href="https://myfounderfrequency.com" style="color:#71717a;text-decoration:none;">
+                  myfounderfrequency.com
+                </a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+function buildBriefEmailHTML({
+	firstName,
+	monthName,
+	year,
+	date,
+}: {
+	firstName: string;
+	monthName: string;
+	year: number;
+	date: string;
+}) {
+	const currentYear = new Date().getFullYear();
+	return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${firstName}'s ${monthName} ${year} Frequency Brief — Founder Frequency</title>
+</head>
+<body style="margin:0;padding:0;background-color:#0e0e10;font-family:system-ui,-apple-system,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#0e0e10;">
+    <tr>
+      <td align="center" style="padding:48px 16px;">
+        <table width="600" cellpadding="0" cellspacing="0" role="presentation"
+          style="max-width:600px;width:100%;background-color:#18181b;border-radius:12px;overflow:hidden;border:1px solid #27272a;">
+
+          <!-- Masthead -->
+          <tr>
+            <td style="padding:28px 40px 24px;border-bottom:1px solid #27272a;">
+              <span style="font-size:15px;font-weight:600;color:#f4f4f5;letter-spacing:-0.2px;">
+                Founder<span style="color:#D4A853;">Frequency</span>
+              </span>
+            </td>
+          </tr>
+
+          <!-- Gold rule -->
+          <tr>
+            <td style="height:2px;background:linear-gradient(90deg,#D4A853 0%,#7C1D3E 100%);"></td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+              <p style="margin:0 0 6px;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#D4A853;">
+                Circle — Monthly Brief
+              </p>
+              <h1 style="margin:0 0 24px;font-size:26px;font-weight:700;color:#f4f4f5;line-height:1.25;letter-spacing:-0.5px;">
+                ${firstName}, your ${monthName} brief is ready.
+              </h1>
+
+              <p style="margin:0 0 20px;font-size:15px;color:#a1a1aa;line-height:1.65;">
+                Your <strong style="color:#f4f4f5;">${monthName} ${year} Founder Frequency Brief</strong>
+                is attached as a PDF — your monthly signal read, tuned to where your frequency sits right now.
+              </p>
+
+              <p style="margin:0 0 32px;font-size:15px;color:#a1a1aa;line-height:1.65;">
+                Read it before you make any significant decisions this month.
+              </p>
+
+              <!-- Divider -->
+              <div style="border-top:1px solid #27272a;margin-bottom:28px;"></div>
+
+              <p style="margin:0 0 6px;font-size:12px;color:#52525b;">Delivered ${date}</p>
+              <p style="margin:0;font-size:12px;color:#52525b;">
+                Questions? Reply to this email or visit
+                <a href="https://myfounderfrequency.com" style="color:#D4A853;text-decoration:none;">
+                  myfounderfrequency.com
+                </a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color:#111113;border-top:1px solid #27272a;padding:18px 40px;">
+              <p style="margin:0;font-size:11px;color:#52525b;text-align:center;">
+                &copy; ${currentYear} Founder Frequency &nbsp;&middot;&nbsp;
                 <a href="https://myfounderfrequency.com" style="color:#71717a;text-decoration:none;">
                   myfounderfrequency.com
                 </a>

@@ -6,12 +6,12 @@
  */
 
 import { serve } from "inngest/next";
-import { inngest, generateReportFn } from "@/lib/inngest";
+import { inngest, generateReportFn, generateBriefFn } from "@/lib/inngest";
 
 // Must be high enough to cover the longest step (Blueprint: ~218 s).
 export const maxDuration = 300;
 
 export const { GET, POST, PUT } = serve({
 	client: inngest,
-	functions: [generateReportFn],
+	functions: [generateReportFn, generateBriefFn],
 });

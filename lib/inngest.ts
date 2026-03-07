@@ -3,9 +3,11 @@
  *
  * Inngest client + background functions.
  *
- * generateReportFn — triggered by Stripe webhook on payment.
+ * generateReportFn — triggered by Stripe webhook on one-time purchase.
  * Runs entirely server-side: Claude → PDF → Resend email.
- * No browser connection required — customer sees instant confirmation.
+ *
+ * generateBriefFn — triggered by Stripe webhook on Circle monthly renewal.
+ * Single Claude call (~2,000 tokens, ~40s) → PDF → Resend email.
  *
  * Blueprint step breakdown (4 parallel Claude calls):
  *   Part 1: Exec Profile + Ch 1-2  (~4,000 tokens, ~65s)
@@ -26,8 +28,9 @@ import {
 	assembleBlueprintPart2Prompt,
 	assembleBlueprintPart3Prompt,
 	assembleBlueprintPart4Prompt,
+	assembleMonthlyBriefPrompt,
 } from "./assembler";
-import { sendReportEmail } from "./email";
+import { sendReportEmail, sendBriefEmail } from "./email";
 
 // ── Client ───────────────────────────────────────────────────────────────────
 
@@ -110,5 +113,44 @@ export const generateReportFn = inngest.createFunction(
 		});
 
 		return { success: true, reportLength: reportText.length };
+	},
+);
+
+// ── Brief event type ──────────────────────────────────────────────────────────
+
+export type GenerateBriefEvent = {
+	name: "brief/generate";
+	data: {
+		name: string;
+		dob: string;
+		email: string;
+		customerId: string;
+		invoiceId: string;
+	};
+};
+
+// ── Monthly brief function (Circle renewal) ───────────────────────────────────
+
+export const generateBriefFn = inngest.createFunction(
+	{
+		id: "generate-brief",
+		retries: 2,
+	},
+	{ event: "brief/generate" },
+	async ({ event, step }) => {
+		const { name, dob, email } = event.data;
+		const now = new Date();
+		const monthName = now.toLocaleString("en-US", { month: "long" });
+		const year = now.getFullYear();
+
+		const briefText = await step.run("generate-with-claude", () =>
+			callClaude(assembleMonthlyBriefPrompt(name, dob), 2500),
+		);
+
+		await step.run("send-email", async () => {
+			await sendBriefEmail({ email, name, brief: briefText, monthName, year });
+		});
+
+		return { success: true, briefLength: briefText.length };
 	},
 );

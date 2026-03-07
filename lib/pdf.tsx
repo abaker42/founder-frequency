@@ -371,11 +371,12 @@ function parseBlocks(text: string): Block[] {
 const TIER_LABELS: Record<string, string> = {
 	insight: "Frequency Report",
 	blueprint: "Full Frequency Blueprint",
+	brief: "Monthly Frequency Brief",
 };
 
 export interface PDFProps {
 	name: string;
-	tier: "insight" | "blueprint";
+	tier: "insight" | "blueprint" | "brief";
 	report: string;
 	generatedDate?: string;
 }
