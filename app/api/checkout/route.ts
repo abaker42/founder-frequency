@@ -56,8 +56,9 @@ export async function POST(req: NextRequest) {
 				name: name.trim(),
 				dob: dob.trim(),
 			},
-			// Collect email for future delivery
-			customer_email: undefined, // Let Stripe collect it
+			// Always create a Stripe Customer for payment sessions so we can
+			// issue customer-restricted upgrade promotion codes after purchase.
+			...(MODE[t] === "payment" && { customer_creation: "always" }),
 			success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
 			cancel_url: `${siteUrl}/#pricing`,
 			allow_promotion_codes: true,

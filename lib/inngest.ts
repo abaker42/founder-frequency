@@ -61,6 +61,7 @@ export type GenerateReportEvent = {
 		tier: "insight" | "blueprint";
 		email: string;
 		sessionId: string;
+		upgradeCode?: string | null;
 	};
 };
 
@@ -73,7 +74,7 @@ export const generateReportFn = inngest.createFunction(
 	},
 	{ event: "report/generate" },
 	async ({ event, step }) => {
-		const { name, dob, email } = event.data;
+		const { name, dob, email, upgradeCode } = event.data;
 		const tier = event.data.tier as "insight" | "blueprint";
 
 		let reportText: string;
@@ -105,7 +106,7 @@ export const generateReportFn = inngest.createFunction(
 
 		// Final step: generate PDF + send email
 		await step.run("send-email", async () => {
-			await sendReportEmail({ email, name, tier, report: reportText });
+			await sendReportEmail({ email, name, tier, report: reportText, upgradeCode: upgradeCode ?? undefined });
 		});
 
 		return { success: true, reportLength: reportText.length };

@@ -22,6 +22,7 @@ export interface SendReportEmailOptions {
 	name: string;
 	tier: "insight" | "blueprint";
 	report: string;
+	upgradeCode?: string;
 }
 
 /**
@@ -33,6 +34,7 @@ export async function sendReportEmail({
 	name,
 	tier,
 	report,
+	upgradeCode,
 }: SendReportEmailOptions): Promise<void> {
 	const resend = new Resend(process.env.RESEND_API_KEY);
 	const tierLabel = TIER_LABELS[tier] ?? "Frequency Report";
@@ -50,7 +52,7 @@ export async function sendReportEmail({
 		from: process.env.RESEND_FROM_EMAIL!,
 		to: email,
 		subject: `${firstName}, your ${tierLabel} is ready`,
-		html: buildEmailHTML({ firstName, name, tierLabel, date }),
+		html: buildEmailHTML({ firstName, name, tierLabel, date, upgradeCode }),
 		attachments: [
 			{
 				filename: `founder-frequency-${firstName.toLowerCase()}.pdf`,
@@ -67,11 +69,13 @@ function buildEmailHTML({
 	name,
 	tierLabel,
 	date,
+	upgradeCode,
 }: {
 	firstName: string;
 	name: string;
 	tierLabel: string;
 	date: string;
+	upgradeCode?: string;
 }) {
 	const year = new Date().getFullYear();
 	return `<!DOCTYPE html>
@@ -135,6 +139,41 @@ function buildEmailHTML({
               </p>
             </td>
           </tr>
+
+          ${upgradeCode ? `
+          <!-- Upgrade offer -->
+          <tr>
+            <td style="padding:28px 40px;border-top:1px solid #27272a;">
+              <p style="margin:0 0 6px;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#D4A853;">
+                Exclusive Upgrade Offer
+              </p>
+              <p style="margin:0 0 12px;font-size:17px;font-weight:700;color:#f4f4f5;line-height:1.3;">
+                Go deeper for $55
+              </p>
+              <p style="margin:0 0 20px;font-size:14px;color:#a1a1aa;line-height:1.65;">
+                Your Frequency Report is the surface layer. The <strong style="color:#f4f4f5;">Full Frequency Blueprint</strong>
+                goes 12,000 words deep — decision-making psychology, wealth patterns, scaling strategy, and a
+                90-day execution framework built around your specific frequency.
+              </p>
+              <p style="margin:0 0 8px;font-size:13px;color:#a1a1aa;">
+                Use this code at checkout to upgrade for $55:
+              </p>
+              <div style="background:#0e0e10;border:1px solid rgba(212,168,83,0.3);border-radius:8px;padding:14px 20px;text-align:center;margin-bottom:20px;">
+                <span style="font-size:22px;font-weight:700;color:#D4A853;letter-spacing:6px;font-family:monospace;">
+                  ${upgradeCode}
+                </span>
+              </div>
+              <p style="margin:0 0 20px;font-size:11px;color:#52525b;line-height:1.6;">
+                This code is exclusively yours — it&rsquo;s linked to your purchase and won&rsquo;t work for anyone else.
+                One-time use. No expiry.
+              </p>
+              <a href="https://myfounderfrequency.com/#pricing"
+                style="display:inline-block;padding:12px 28px;background-color:#D4A853;color:#09090b;font-size:13px;font-weight:700;text-decoration:none;border-radius:8px;letter-spacing:0.5px;">
+                Upgrade to Blueprint →
+              </a>
+            </td>
+          </tr>
+          ` : ''}
 
           <!-- Footer -->
           <tr>

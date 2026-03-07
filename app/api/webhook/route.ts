@@ -68,6 +68,31 @@ export async function POST(req: NextRequest) {
 			const genTier: "insight" | "blueprint" =
 				tier === "blueprint" || tier === "circle" ? "blueprint" : "insight";
 
+			// For Report buyers: generate a customer-restricted $33-off promo code
+			// so they can upgrade to Blueprint for $55. The code is bound to their
+			// Stripe Customer ID — Stripe rejects it at checkout for anyone else.
+			let upgradeCode: string | null = null;
+			if (
+				genTier === "insight" &&
+				session.customer &&
+				process.env.STRIPE_UPGRADE_COUPON_ID
+			) {
+				try {
+					const promoCode = await stripe.promotionCodes.create({
+						promotion: {
+							type: "coupon",
+							coupon: process.env.STRIPE_UPGRADE_COUPON_ID!,
+						},
+						customer: session.customer as string,
+						max_redemptions: 1,
+					});
+					upgradeCode = promoCode.code;
+				} catch (err: any) {
+					// Non-fatal — report still sends, just without the upgrade offer
+					console.error("[Stripe] Failed to create upgrade promo code:", err.message);
+				}
+			}
+
 			await inngest.send({
 				name: "report/generate",
 				data: {
@@ -76,6 +101,7 @@ export async function POST(req: NextRequest) {
 					tier: genTier,
 					email,
 					sessionId: session.id,
+					upgradeCode,
 				},
 			});
 
