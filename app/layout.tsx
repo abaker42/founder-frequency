@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import Analytics from "@/components/Analytics";
 
 // ── SEO: Site-wide constants ─────────────────────────────────────────
 
@@ -164,6 +165,7 @@ export default function RootLayout({
 			</head>
 			<body className='bg-zinc-950 text-zinc-100 font-body antialiased'>
 				{children}
+				<Analytics />
 			</body>
 		</html>
 	);

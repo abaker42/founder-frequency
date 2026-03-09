@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { trackEvent } from "@/lib/pixels";
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -337,6 +338,7 @@ export default function Home() {
 
 			const data: CalculatorResult = await res.json();
 			setResult(data);
+			trackEvent("ViewContent", "ViewContent", { content_name: data.archetype?.name ?? "Frequency Scan" });
 
 			setTimeout(() => {
 				resultRef.current?.scrollIntoView({
@@ -360,6 +362,8 @@ export default function Home() {
 		});
 	};
 
+	const TIER_VALUES: Record<string, number> = { report: 33, blueprint: 88, circle: 11 };
+
 	const handleCheckout = async (tier: "report" | "blueprint" | "circle") => {
 		if (!name.trim() || !dob.trim()) {
 			setError(
@@ -368,6 +372,7 @@ export default function Home() {
 			scrollToCalculator();
 			return;
 		}
+		trackEvent("InitiateCheckout", "InitiateCheckout", { value: TIER_VALUES[tier], currency: "USD" });
 		setCheckoutLoading(tier);
 		try {
 			const res = await fetch("/api/checkout", {
@@ -714,7 +719,12 @@ export default function Home() {
 																archetypeName: result?.archetype.name,
 															}),
 														});
-														setSubscribePhase(res.ok ? "done" : "error");
+														if (res.ok) {
+														trackEvent("Lead", "Subscribe", {});
+														setSubscribePhase("done");
+													} else {
+														setSubscribePhase("error");
+													}
 													} catch {
 														setSubscribePhase("error");
 													}

@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { trackEvent } from "@/lib/pixels";
 
 // useSearchParams() requires a Suspense boundary — SuccessContent is the
 // inner component, SuccessPage (default export) wraps it.
@@ -55,6 +56,9 @@ function SuccessContent() {
 			setProfileName(name ?? "");
 			setTierLabel(TIER_LABELS[tier] ?? "Founder Frequency Report");
 			if (email) setCustomerEmail(email);
+
+			const TIER_VALUES: Record<string, number> = { report: 33, blueprint: 88, circle: 11 };
+			trackEvent("Purchase", "CompletePayment", { value: TIER_VALUES[tier] ?? 0, currency: "USD" });
 
 			// Report generation is handled server-side via Stripe webhook → Inngest.
 			// Nothing to wait for here — the email is already on its way.
