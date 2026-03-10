@@ -470,11 +470,13 @@ export default function Home() {
 						</h1>
 
 						<p className='opacity-0 animate-fade-in-up delay-300 font-body text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light'>
-							Five ancient profiling systems — numerology, astrology, and
-							elemental analysis — synthesized by AI into a personalized
-							business intelligence report. Decision-making psychology, wealth
-							patterns, risk tolerance, leadership style, and revenue alignment
-							decoded from your name and birthday.
+							Most founders spend years executing strategies that work
+							brilliantly for other people. Your frequency reveals the operating
+							patterns behind every decision you make — the patterns
+							driving your risk tolerance, your money blocks, your leadership
+							style, and which business models will always fight you versus flow.
+							Decoded from your name and birthday across five ancient profiling
+							systems, synthesized by AI.
 						</p>
 
 						<div className='opacity-0 animate-fade-in-up delay-500 flex flex-col items-center justify-center gap-4'>
