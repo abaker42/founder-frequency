@@ -11,6 +11,8 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
     "@react-pdf/renderer": "^4.3.2",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "inngest": "^3.52.6",
     "next": "16.1.6",
     "react": "19.2.3",
