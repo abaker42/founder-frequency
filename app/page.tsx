@@ -589,7 +589,6 @@ export default function Home() {
 									id='calc-dob'
 									type='text'
 									required
-									inputMode='numeric'
 									value={dob}
 									onChange={(e) => setDob(e.target.value)}
 									placeholder='MM/DD/YYYY'
