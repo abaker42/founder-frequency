@@ -18,6 +18,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { inngest } from "@/lib/inngest";
+import { logEvent } from "@/lib/db";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -86,7 +87,8 @@ export async function POST(req: NextRequest) {
 					},
 				});
 
-				console.log(`[Inngest] brief/generate event sent (new subscriber)`, { sessionId: session.id });
+				logEvent("purchase", email, { tier: "circle", sessionId: session.id });
+			console.log(`[Inngest] brief/generate event sent (new subscriber)`, { sessionId: session.id });
 			} else {
 				// One-time purchase: insight or blueprint report
 				const genTier: "insight" | "blueprint" =
@@ -127,7 +129,8 @@ export async function POST(req: NextRequest) {
 					},
 				});
 
-				console.log(`[Inngest] report/generate event sent`, { tier: genTier, sessionId: session.id });
+				logEvent("purchase", email, { tier: genTier, sessionId: session.id });
+			console.log(`[Inngest] report/generate event sent`, { tier: genTier, sessionId: session.id });
 			}
 		} else {
 			console.warn(`[Stripe] Missing metadata — skipping generation`, { sessionId: session.id, tier, hasDob: !!dob, hasEmail: !!email });
@@ -161,7 +164,8 @@ export async function POST(req: NextRequest) {
 						invoiceId: invoice.id,
 					},
 				});
-				console.log(`[Inngest] brief/generate event sent`, { customerId, invoiceId: invoice.id });
+				logEvent("brief_renewal", email, { customerId, invoiceId: invoice.id });
+			console.log(`[Inngest] brief/generate event sent`, { customerId, invoiceId: invoice.id });
 			} else {
 				console.warn(`[Stripe] Circle renewal missing profile data — skipping brief`, { customerId, invoiceId: invoice.id });
 			}

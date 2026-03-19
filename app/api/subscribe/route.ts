@@ -14,6 +14,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { logEvent } from "@/lib/db";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -45,6 +46,11 @@ export async function POST(req: NextRequest) {
 			// e.g. filter contacts where lastName contains "Signal Architect"
 			lastName: archetypeName ?? undefined,
 			unsubscribed: false,
+		});
+
+		logEvent("email_capture", email, {
+			firstName: firstName ?? null,
+			archetypeName: archetypeName ?? null,
 		});
 
 		return NextResponse.json({ success: true });

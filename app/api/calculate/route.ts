@@ -12,6 +12,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { calculateProfile } from "@/lib/calculator";
 import { detectTensions, detectAmplifications } from "@/lib/assembler";
 import { classifyArchetype } from "@/lib/archetypes";
+import { logEvent } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
 	try {
@@ -40,6 +41,14 @@ export async function POST(req: NextRequest) {
 			profile.life_path.is_master || profile.expression.is_master
 				? ` You carry a Master Number frequency — only ~11% of the population does. This amplifies everything.`
 				: "";
+
+		// Fire-and-forget — never block the response
+		logEvent("calculator_scan", null, {
+			archetype: archetype.name,
+			lifePath: profile.life_path.number,
+			expression: profile.expression.number,
+			tensionCount: tensions.length,
+		});
 
 		return NextResponse.json({
 			firstName,
